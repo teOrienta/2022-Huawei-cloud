@@ -47,6 +47,35 @@
             (onOptionClick)="changeMode(mode)"
           ></p-selectButton>
         </div>
+
+        <div>
+          <h4>Max value: {{ valueRange }}</h4>
+          <p-slider [style]="{ width: '200px' }" formControlName="valueRange" [max]="5" [step]="1" [(ngModel)]="valueRange">
+          </p-slider>
+        </div>
+
+        <div>
+          <h5>Acquisition type</h5>
+          <p-autoComplete>
+            [(ngModel)]="acquisition"
+            [minLength]="1"
+            [suggestions]="acquisitionFilter" 
+            (completeMethod)="searchAcquisition($event)"
+            formControlName="acquisition"
+          </p-autoComplete>
+        </div>
+
+        <div>
+          <h5>County</h5>
+          <p-autoComplete>
+            [(ngModel)]="county"
+            [minLength]="1"
+            [suggestions]="countyFilter"
+            (completeMethod)="searchCounty($event)"
+            formControlName="county"
+          </p-autoComplete>
+        </div>
+
       </div>
     </p-card>
     <app-flow [graphSource]="graphSource"></app-flow>

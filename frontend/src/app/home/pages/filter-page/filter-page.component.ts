@@ -28,10 +28,12 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
+
     this.form = formbuilder.group({
       startDate: [null],
       endDate: [null],
       detailLevel: [0],
+      mode: ['frequency'],
     });
 
     this.form.valueChanges.subscribe((e) => {
