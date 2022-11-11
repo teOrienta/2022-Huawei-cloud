@@ -49,13 +49,7 @@ async def filter(request: FilterInput):
     stats = get_log_statistics(filtered_log)
 
     dfg_detail_percentage = (1 + dfg_detail_level) * 20 / 100
-    freq_dfg_file_path, perf_dfg_file_path = generate_svg(filtered_log, dfg_detail_percentage)
-
-    with open(freq_dfg_file_path, encoding='utf-8') as file:
-        freq_dfg_str = "".join(file.read().splitlines())
-
-    with open(perf_dfg_file_path, encoding='utf-8') as file:
-        perf_dfg_str = "".join(file.read().splitlines())
+    freq_svg_str, perf_svg_str = generate_svg(filtered_log, dfg_detail_percentage)
     
     return {
         "filters": {
@@ -67,6 +61,6 @@ async def filter(request: FilterInput):
 
         "statistics": stats,
 
-        "freq_svg": freq_dfg_str,
-        "perf_svg": perf_dfg_str
+        "freq_svg": freq_svg_str,
+        "perf_svg": perf_svg_str
     }
