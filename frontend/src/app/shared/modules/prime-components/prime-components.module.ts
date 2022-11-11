@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     ButtonModule,
     SliderModule,
     SelectButtonModule,
+    AutoCompleteModule
   ],
   exports: [
     CalendarModule,
@@ -23,6 +25,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     ButtonModule,
     SliderModule,
     SelectButtonModule,
+    AutoCompleteModule
   ],
 })
 export class PrimeComponentsModule {}
