@@ -4,8 +4,12 @@ main {
   height: 100vh;
 
   [navbar] {
+    min-width: 225px;
+    display: flex;
+    flex-direction: column;
     background-color: #0058b5;
-    padding: 2rem;
+    gap: 1rem;
+    padding: 1rem;
     text-align: center;
 
     [title] {
@@ -24,6 +28,7 @@ main {
   }
 
   [fluxo] {
+    min-width: 900px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
