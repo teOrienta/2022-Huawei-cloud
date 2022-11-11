@@ -1,0 +1,5 @@
+python-dotenv
+pm4py
+fastapi
+pika
+uvicorn[standard]
