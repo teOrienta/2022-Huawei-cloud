@@ -1,0 +1,1 @@
+from .licitacoes import Licitacoes, LicitacoesModel

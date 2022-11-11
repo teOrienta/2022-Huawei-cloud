@@ -3,3 +3,4 @@ pm4py
 fastapi
 pika
 uvicorn[standard]
+sqlalchemy
