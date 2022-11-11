@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FlowGraphParams } from 'src/app/shared/types/flow-graph-params';
 import { HomeFacade } from '../../home.facade';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-filter-page',
@@ -19,7 +21,7 @@ export class FilterPageComponent implements OnInit {
     this.form = formbuilder.group({
       startDate: [null],
       endDate: [null],
-      detailLevel: [null],
+      detailLevel: [0],
       mode: ['frequency'],
     });
 
@@ -40,6 +42,20 @@ export class FilterPageComponent implements OnInit {
   }
 
   updateFlow() {
-    console.log(this.form.value);
+    const formatedDates = {
+      start: this.form.controls['startDate'].value
+        ? formatDate(this.form.controls['startDate'].value, 'd/MM/yy', 'pt-BR')
+        : null,
+      end: this.form.controls['endDate'].value
+        ? formatDate(this.form.controls['endDate'].value, 'd/MM/yy', 'pt-BR')
+        : null,
+    };
+    const graphParams: FlowGraphParams = {
+      start_date: formatedDates.start,
+      end_date: formatedDates.end,
+      detailLevel: this.form.controls['detailLevel'].value,
+      mode: this.form.controls['mode'].value,
+    };
+    this.homeFacade.setGraphParams(graphParams);
   }
 }
