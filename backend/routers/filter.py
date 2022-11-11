@@ -41,7 +41,6 @@ async def filter(request: FilterInput):
     )
 
     if len(filtered_log) == 0:
-        print("log size 0.")
         return status.HTTP_404_NOT_FOUND
 
     get_cache().save_filtered_log(filtered_log)
@@ -50,16 +49,9 @@ async def filter(request: FilterInput):
 
     dfg_detail_percentage = (1 + dfg_detail_level) * 20 / 100
     freq_svg_str, perf_svg_str = generate_svg(filtered_log, dfg_detail_percentage)
-    
-    filters = {
-        "exhibition": "frequency",
-        "detail_level": dfg_detail_level,
-        "startDate": start_date,
-        "endDate": end_date
-    }
 
     return {
-        "filters": filters,
+        "filters": request.dict(),
         "statistics": stats,
         "freq_svg": freq_svg_str,
         "perf_svg": perf_svg_str
