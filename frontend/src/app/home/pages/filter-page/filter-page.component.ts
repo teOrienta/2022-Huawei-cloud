@@ -10,6 +10,7 @@ import { HomeFacade } from '../../home.facade';
 export class FilterPageComponent implements OnInit {
   form: FormGroup;
   detailLevel: number = 0;
+  timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -21,7 +22,24 @@ export class FilterPageComponent implements OnInit {
       detailLevel: [null],
       mode: ['frequency'],
     });
+
+    this.form.valueChanges.subscribe((e) => {
+      this.updateBounce();
+    });
   }
 
   ngOnInit(): void {}
+
+  updateBounce() {
+    if (this.timeOutState) {
+      clearTimeout(this.timeOutState);
+    }
+    this.timeOutState = setTimeout(() => {
+      this.updateFlow();
+    }, 1000);
+  }
+
+  updateFlow() {
+    console.log(this.form.value);
+  }
 }
