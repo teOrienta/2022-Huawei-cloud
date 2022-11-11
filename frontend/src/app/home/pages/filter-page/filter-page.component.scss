@@ -1,0 +1,42 @@
+main {
+  display: flex;
+
+  .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  p-card {
+    max-height: 40em;
+
+    .filter-div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+
+      div {
+        h5 {
+          margin-block-start: 0;
+        }
+      }
+    }
+
+    .image-container {
+      max-height: 35em;
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .image-container:active {
+      cursor: grabbing;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+  }
+}

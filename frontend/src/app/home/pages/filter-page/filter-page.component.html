@@ -1,6 +1,54 @@
 <main>
   <app-navbar></app-navbar>
   <div class="content">
+    <p-card [formGroup]="form" header="Filters">
+      <div class="filter-div">
+        <p-calendar
+          [style]="{ width: '230px' }"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          [readonlyInput]="true"
+          placeholder="Start date"
+          formControlName="startDate"
+        ></p-calendar>
+
+        <p-calendar
+          [style]="{ width: '230px' }"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          [readonlyInput]="true"
+          placeholder="Final date"
+          formControlName="endDate"
+        ></p-calendar>
+
+        <div>
+          <h5>Detail level: {{ detailLevel }}</h5>
+          <p-slider
+            [style]="{ width: '200px' }"
+            formControlName="detailLevel"
+            [max]="5"
+            [step]="1"
+            [(ngModel)]="detailLevel"
+          ></p-slider>
+        </div>
+
+        <div>
+          <h5>Mode</h5>
+          <p-selectButton
+            [options]="[
+              { label: 'Performance', value: 'performance' },
+              { label: 'Frequency', value: 'frequency' }
+            ]"
+            formControlName="mode"
+            optionLabel="label"
+            optionValue="value"
+          ></p-selectButton>
+        </div>
+      </div>
+    </p-card>
+    <p-card>
+      <div class="image-container" [innerHTML]="graphSource" #graph></div>
+    </p-card>
     <app-footer></app-footer>
   </div>
 </main>

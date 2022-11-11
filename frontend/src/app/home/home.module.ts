@@ -6,8 +6,7 @@ import { HomeInitializerProvider } from './home.initializer';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ForbiddenPageComponent } from './pages/forbidden-page/forbidden-page.component';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
+
 import { HomeState } from './state/home.state';
 import { HomeApi } from './api/home.api';
 import { HomeService } from './services/home.service';
@@ -24,7 +23,7 @@ import { FooterComponent } from './component/footer/footer.component';
     NavbarComponent,
     FooterComponent,
   ],
-  imports: [HomeRoutingModule, SharedModule, CardModule, ButtonModule],
+  imports: [HomeRoutingModule, SharedModule],
   providers: [
     HomeFacade,
     HomeState,
