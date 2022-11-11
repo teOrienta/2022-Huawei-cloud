@@ -1,5 +1,8 @@
 node_modules
 .vscode
+/venv
+*.csv
+*.pyc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

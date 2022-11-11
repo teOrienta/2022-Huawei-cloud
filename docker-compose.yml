@@ -1,0 +1,62 @@
+version: "3.3"
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - project-network
+
+  producer:
+    build: ./producer
+    restart: always
+    command: python main.py
+    networks:
+      - project-network
+    depends_on:
+      - rabbitmq
+
+    env_file:
+      - .env
+
+  backend:
+    build: ./backend
+    command: python -m uvicorn main:app --log-level info --host 0.0.0.0
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - ./backend:/usr/app/backend
+    networks:
+      - project-network
+    depends_on:
+      - producer
+    env_file:
+      - .env
+
+  frontend:
+    build: ./frontend
+    restart: always
+    networks:
+      - project-network
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:1.19.2-alpine
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - project-network
+    depends_on:
+      - producer
+
+networks:
+  project-network:
+    driver: overlay
+    attachable: true
