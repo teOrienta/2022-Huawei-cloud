@@ -13,8 +13,6 @@ import * as svgPanZoom from 'svg-pan-zoom';
 export class FilterPageComponent implements OnInit {
   form: FormGroup;
   subscription!: Subscription;
-  dataName = 'UFPE';
-  dataDate = Date.now();
   changeCount: number = 0;
   detailLevel: number = 0;
 
