@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
       return setInterval(() => {
         this.homeFacade.fetchFlowGraph();
         this.dataDate = Date.now();
-      }, 1000);
+      }, 30000);
     } else {
       console.log(this.intervalId);
       clearInterval(this.intervalId);
