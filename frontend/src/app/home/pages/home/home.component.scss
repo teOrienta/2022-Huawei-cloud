@@ -1,0 +1,83 @@
+main {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  height: 100vh;
+
+  [navbar] {
+    background-color: #0058b5;
+    padding: 2rem;
+    text-align: center;
+
+    [title] {
+      font-size: 2rem;
+    }
+
+    hr {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+  }
+
+  [fluxo] {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    margin: 1.5rem auto;
+
+    header {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h2 {
+        text-align: end;
+      }
+
+      @media screen and (max-width: 1300px) {
+        font-size: 0.8rem;
+      }
+    }
+
+    p-card {
+      max-height: 40em;
+
+      .image-container {
+        max-height: 35em;
+        overflow: hidden;
+        position: relative;
+        cursor: grab;
+        user-select: none;
+      }
+
+      .image-container:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
+
+      [pButton] {
+        width: 100%;
+        margin-top: 1rem;
+      }
+    }
+
+    footer {
+      display: flex;
+      height: 5rem;
+      padding: 1rem;
+
+      a {
+        color: unset;
+        align-self: flex-end;
+        margin-left: auto;
+      }
+    }
+  }
+}
