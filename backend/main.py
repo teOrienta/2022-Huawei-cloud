@@ -2,6 +2,7 @@ from pm4py.streaming.algo.discovery.dfg import algorithm as dfg_discovery
 from pm4py.streaming.stream.live_event_stream import LiveEventStream
 from pm4py.objects.log.obj import Event 
 from pm4py import save_vis_dfg
+from routers import routers
 
 import tempfile, json, logging
 from threading import Thread
@@ -20,6 +21,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(routers)
 
 event_stream = LiveEventStream()
 streaming_dfg = dfg_discovery.apply()
@@ -42,7 +45,6 @@ def get_dfg_image():
     file_path.close()
 
     dfg, _, sa, ea = streaming_dfg.get()
-    print(file_path.name)
     save_vis_dfg(dfg, sa, ea, file_path.name)
     with open(file_path.name, encoding='utf-8') as file:
         image = "".join(file.read().splitlines())
@@ -54,7 +56,6 @@ def download_dfg_image():
     file_path.close()
 
     dfg, _, sa, ea = streaming_dfg.get()
-    print(file_path.name)
     save_vis_dfg(dfg, sa, ea, file_path.name)
     return FileResponse(file_path.name)
 

@@ -1,6 +1,10 @@
 from dotenv import dotenv_values
 import os
 
+from .event_log_cache import EventLogCache
+
+event_log_cache_instance = EventLogCache()
+
 def get_app_config(env_file_path: str) -> dict:
     def get_value(key: str, default: any = "") -> str:
         return os.environ.get(key) or env_config.get(key) or default
