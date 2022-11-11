@@ -2,8 +2,10 @@ from dotenv import dotenv_values
 import os
 
 from .event_log_cache import EventLogCache
+from database import PostgreSQL
 
 event_log_cache_instance = EventLogCache()
+database = PostgreSQL()
 
 def get_app_config(env_file_path: str) -> dict:
     def get_value(key: str, default: any = "") -> str:
