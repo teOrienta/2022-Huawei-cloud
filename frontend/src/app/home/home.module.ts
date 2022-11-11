@@ -11,9 +11,19 @@ import { ButtonModule } from 'primeng/button';
 import { HomeState } from './state/home.state';
 import { HomeApi } from './api/home.api';
 import { HomeService } from './services/home.service';
+import { FilterPageComponent } from './pages/filter-page/filter-page.component';
+import { NavbarComponent } from './component/navbar/navbar.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 @NgModule({
-  declarations: [HomeComponent, NotFoundComponent, ForbiddenPageComponent],
+  declarations: [
+    HomeComponent,
+    NotFoundComponent,
+    ForbiddenPageComponent,
+    FilterPageComponent,
+    NavbarComponent,
+    FooterComponent,
+  ],
   imports: [HomeRoutingModule, SharedModule, CardModule, ButtonModule],
   providers: [
     HomeFacade,

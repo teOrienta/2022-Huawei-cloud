@@ -1,0 +1,25 @@
+[navbar] {
+  height: 100vh;
+  width: 225px;
+  display: flex;
+  flex-direction: column;
+  background-color: #0058b5;
+  gap: 1rem;
+  padding: 1rem;
+  text-align: center;
+
+  [title] {
+    font-size: 2rem;
+  }
+
+  hr {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    font-family: "roboto";
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+}

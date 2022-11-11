@@ -1,31 +1,6 @@
 main {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
   height: 100vh;
-
-  [navbar] {
-    min-width: 225px;
-    display: flex;
-    flex-direction: column;
-    background-color: #0058b5;
-    gap: 1rem;
-    padding: 1rem;
-    text-align: center;
-
-    [title] {
-      font-size: 2rem;
-    }
-
-    hr {
-      margin-bottom: 1rem;
-    }
-
-    a {
-      color: white;
-      text-decoration: none;
-      font-size: 1.5rem;
-    }
-  }
 
   [fluxo] {
     min-width: 900px;
@@ -70,18 +45,6 @@ main {
       [pButton] {
         width: 100%;
         margin-top: 1rem;
-      }
-    }
-
-    footer {
-      display: flex;
-      height: 5rem;
-      padding: 1rem;
-
-      a {
-        color: unset;
-        align-self: flex-end;
-        margin-left: auto;
       }
     }
   }
