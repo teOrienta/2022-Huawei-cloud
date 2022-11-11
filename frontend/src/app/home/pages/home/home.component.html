@@ -1,18 +1,23 @@
 <main>
-  <nav navbar>
-    <a title href="/">Dashboard</a>
-    <hr />
-    <a href="/">Fluxo de dados</a>
-  </nav>
-
+  <app-navbar></app-navbar>
   <div fluxo>
     <header>
-      <h1>Fluxo de dados | Licitações</h1>
-      <h2>Dados atualizados em {{ dataDate | date: "dd/MM/yyyy, h:mm" }}</h2>
+      <h1>Data flow | public auctions</h1>
+      <div timeDiv>
+        <h2>Data updated at {{ dataDate | date: "dd/MM/yyyy, h:mm" }}</h2>
+
+        <button
+          pButton
+          [icon]="isPaused ? 'pi pi-play' : 'pi pi-pause'"
+          type="button"
+          class="p-button-sm p-button-rounded"
+          (click)="updateData()"
+        ></button>
+      </div>
     </header>
 
     <p-card>
-      <div class="image-container" [innerHTML]="graphSource" #graph></div>
+      <app-flow></app-flow>
       <button
         pButton
         type="button"
@@ -21,10 +26,6 @@
       ></button>
     </p-card>
 
-    <footer>
-      <a href="https://github.com/teOrienta/2022-Huawei-cloud">
-        <i class="pi pi-github" style="font-size: 3rem"></i>
-      </a>
-    </footer>
+    <app-footer></app-footer>
   </div>
 </main>

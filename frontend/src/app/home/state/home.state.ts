@@ -9,7 +9,7 @@ export class HomeState {
     this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
   );
   private readonly graphGenerationParams = new BehaviorSubject<FlowGraphParams>(
-    { start_date: null, end_date: null }
+    {} as FlowGraphParams
   );
   private readonly errorMessage = new BehaviorSubject<string>('');
   private readonly loading = new BehaviorSubject<boolean>(false);

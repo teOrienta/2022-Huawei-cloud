@@ -1,0 +1,17 @@
+p-card {
+  max-height: 40em;
+
+  .image-container {
+    max-height: 35em;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .image-container:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+  }
+}

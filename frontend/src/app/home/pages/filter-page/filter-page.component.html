@@ -1,0 +1,81 @@
+<main>
+  <app-navbar></app-navbar>
+  <div class="content">
+    <p-card [formGroup]="form" header="Filters">
+      <div class="filter-div">
+        <p-calendar
+          [style]="{ width: '200px' }"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          [readonlyInput]="true"
+          placeholder="Start date"
+          formControlName="startDate"
+        ></p-calendar>
+
+        <p-calendar
+          [style]="{ width: '200px' }"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          [readonlyInput]="true"
+          placeholder="Final date"
+          formControlName="endDate"
+        ></p-calendar>
+
+        <div>
+          <h4>Detail level: {{ detailLevel }}</h4>
+          <p-slider
+            [style]="{ width: '200px' }"
+            formControlName="detailLevel"
+            [max]="5"
+            [step]="1"
+            [(ngModel)]="detailLevel"
+          ></p-slider>
+        </div>
+
+        <div>
+          <h4>Mode</h4>
+          <p-selectButton
+            [options]="[
+              { label: 'Performance', value: 'performance' },
+              { label: 'Frequency', value: 'frequency' }
+            ]"
+            formControlName="mode"
+            optionLabel="label"
+            optionValue="value"
+          ></p-selectButton>
+        </div>
+
+        <div>
+          <h4>Max value: {{ valueRange }}</h4>
+          <p-slider [style]="{ width: '200px' }" formControlName="valueRange" [max]="5" [step]="1" [(ngModel)]="valueRange">
+          </p-slider>
+        </div>
+
+        <div>
+          <h5>Acquisition type</h5>
+          <p-autoComplete>
+            [(ngModel)]="acquisition"
+            [minLength]="1"
+            [suggestions]="acquisitionFilter" 
+            (completeMethod)="searchAcquisition($event)"
+            formControlName="acquisition"
+          </p-autoComplete>
+        </div>
+
+        <div>
+          <h5>County</h5>
+          <p-autoComplete>
+            [(ngModel)]="county"
+            [minLength]="1"
+            [suggestions]="countyFilter"
+            (completeMethod)="searchCounty($event)"
+            formControlName="county"
+          </p-autoComplete>
+        </div>
+
+      </div>
+    </p-card>
+    <app-flow></app-flow>
+    <app-footer></app-footer>
+  </div>
+</main>
