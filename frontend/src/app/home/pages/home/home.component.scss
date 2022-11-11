@@ -16,8 +16,14 @@ main {
       align-items: center;
       justify-content: space-between;
 
-      h2 {
-        text-align: end;
+      [timeDiv] {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+
+        h2 {
+          text-align: end;
+        }
       }
 
       @media screen and (max-width: 1300px) {
@@ -27,20 +33,6 @@ main {
 
     p-card {
       max-height: 40em;
-
-      .image-container {
-        max-height: 35em;
-        overflow: hidden;
-        position: relative;
-        cursor: grab;
-        user-select: none;
-      }
-
-      .image-container:active {
-        cursor: grabbing;
-        cursor: -moz-grabbing;
-        cursor: -webkit-grabbing;
-      }
 
       [pButton] {
         width: 100%;

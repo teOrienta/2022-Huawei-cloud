@@ -13,6 +13,7 @@ import { HomeService } from './services/home.service';
 import { FilterPageComponent } from './pages/filter-page/filter-page.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FooterComponent } from './component/footer/footer.component';
+import { FlowComponent } from './component/flow/flow.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FooterComponent } from './component/footer/footer.component';
     FilterPageComponent,
     NavbarComponent,
     FooterComponent,
+    FlowComponent,
   ],
   imports: [HomeRoutingModule, SharedModule],
   providers: [

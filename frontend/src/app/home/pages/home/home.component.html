@@ -3,11 +3,21 @@
   <div fluxo>
     <header>
       <h1>Data flow | public auctions</h1>
-      <h2>Data updated at {{ dataDate | date: "dd/MM/yyyy, h:mm" }}</h2>
+      <div timeDiv>
+        <h2>Data updated at {{ dataDate | date: "dd/MM/yyyy, h:mm" }}</h2>
+
+        <button
+          pButton
+          [icon]="isPaused ? 'pi pi-play' : 'pi pi-pause'"
+          type="button"
+          class="p-button-sm p-button-rounded"
+          (click)="updateData()"
+        ></button>
+      </div>
     </header>
 
     <p-card>
-      <div class="image-container" [innerHTML]="graphSource" #graph></div>
+      <app-flow></app-flow>
       <button
         pButton
         type="button"
