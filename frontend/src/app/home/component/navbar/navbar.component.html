@@ -3,8 +3,11 @@
     <a href="/">
       <img src="../../../../assets/despro_logo2.png" alt="logo-icon" />
     </a>
-    <hr />
   </div>
-  <a href="/">Data flow</a>
-  <a href="/filter">Filtering</a>
+  <div class="routes">
+    <a href="/" [style]="url == '/' ? borderSelected : ''">Data flow</a>
+    <a href="/filter" [style]="url == '/filter' ? borderSelected : ''"
+      >Filtering</a
+    >
+  </div>
 </nav>
