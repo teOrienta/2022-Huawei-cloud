@@ -5,6 +5,7 @@ import {
   ViewChild,
   OnDestroy,
   AfterContentChecked,
+  Input,
 } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
@@ -19,7 +20,7 @@ import * as svgPanZoom from 'svg-pan-zoom';
 export class FlowComponent implements OnInit, OnDestroy, AfterContentChecked {
   subscription!: Subscription;
   changeCount: number = 0;
-  graphSource!: SafeHtml | null;
+  @Input() graphSource!: SafeHtml | null;
   @ViewChild('graph', { static: false }) graph!: ElementRef;
 
   constructor(private homeFacade: HomeFacade) {}

@@ -14,6 +14,7 @@ import { FilterPageComponent } from './pages/filter-page/filter-page.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { FlowComponent } from './component/flow/flow.component';
+import { CsvImportationComponent } from './pages/csv-importation/csv-importation.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FlowComponent } from './component/flow/flow.component';
     NavbarComponent,
     FooterComponent,
     FlowComponent,
+    CsvImportationComponent,
   ],
   imports: [HomeRoutingModule, SharedModule],
   providers: [
