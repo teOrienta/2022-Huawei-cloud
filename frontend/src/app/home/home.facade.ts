@@ -13,7 +13,7 @@ export class HomeFacade {
   constructor(
     private homeService: HomeService,
     private readonly state: HomeState,
-    private readonly flowGraphApi: HomeApi
+    private readonly homeApi: HomeApi
   ) {}
 
   getGraphSource() {
@@ -36,7 +36,7 @@ export class HomeFacade {
   ) {
     const { successfulCallback } = fetchParams;
     this.state.setLoading(true);
-    this.flowGraphApi
+    this.homeApi
       .downloadFlowGraph()
       .pipe(first())
       .subscribe({
@@ -51,4 +51,27 @@ export class HomeFacade {
         },
       });
   }
+
+  fetchCounties() {
+    this.homeApi.getCounties().subscribe((data) => {
+      console.log(data)
+      //this.state.setCountiesState(data);
+    })
+  }
+
+  getCountiesState() {
+    return this.state.getCountiesState();
+  }
+
+  fetchAcquisitionTypes() {
+    this.homeApi.getAcquisitionTypes().subscribe((data) => {
+      console.log(data);
+      //this.state.setAcquisitionsState(data);
+    })
+  }
+
+  getAcquisitionTypesState() {
+    return this.state.getAcquisitionsState();
+  }
+
 }

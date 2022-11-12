@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FlowGraphParams } from 'src/app/shared/types/flow-graph-params';
+import { Acquisition, County } from '../types/filter-types';
 
 @Injectable({ providedIn: 'root' })
 export class HomeState {
@@ -11,6 +12,8 @@ export class HomeState {
   private readonly graphGenerationParams = new BehaviorSubject<FlowGraphParams>(
     {} as FlowGraphParams
   );
+  private countiesState = new BehaviorSubject<County>({});
+  private acquisitionsState = new BehaviorSubject<Acquisition>({});
   private readonly errorMessage = new BehaviorSubject<string>('');
   private readonly loading = new BehaviorSubject<boolean>(false);
 
@@ -30,6 +33,22 @@ export class HomeState {
 
   setGraphGenerationParams(value: FlowGraphParams) {
     this.graphGenerationParams.next(value);
+  }
+
+  setCountiesState(counties: County) {
+    this.countiesState.next(counties);
+  }
+
+  getCountiesState() {
+    return this.countiesState.asObservable();
+  }
+
+  setAcquisitionsState(acquisitions: Acquisition) {
+    this.acquisitionsState.next(acquisitions);
+  }
+
+  getAcquisitionsState() {
+    return this.acquisitionsState.asObservable();
   }
 
   getErrorMessage() {

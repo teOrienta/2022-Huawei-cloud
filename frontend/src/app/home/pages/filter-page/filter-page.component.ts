@@ -17,9 +17,11 @@ export class FilterPageComponent implements OnInit {
 
   acquisition!: string; 
   acquisitionFilter!: string[];
+  acquisitionTypes!: string[];
 
   county!: string;
   countyFilter!: string[];
+  counties!: string[];
 
   suggestions: string[] = ["modalit1", "mod2", "mod3"]; 
   @ViewChild('graph', { static: false }) graph!: ElementRef;
@@ -28,6 +30,16 @@ export class FilterPageComponent implements OnInit {
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
+    this.homeFacade.fetchCounties();
+    this.homeFacade.fetchAcquisitionTypes();
+
+    this.homeFacade.getCountiesState().subscribe((counties) => {
+      //this.counties = counties;
+    })
+
+    this.homeFacade.getAcquisitionTypesState().subscribe((acquisitionTypes) => {
+      //this.acquisitionTypes = acquisitionTypes;
+    })
 
     this.form = formbuilder.group({
       startDate: [null],
