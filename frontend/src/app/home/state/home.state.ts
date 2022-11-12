@@ -66,6 +66,22 @@ export class HomeState {
     this.graphGenerationParams.next(value);
   }
 
+  setCountiesState(counties: County) {
+    this.countiesState.next(counties);
+  }
+
+  getCountiesState() {
+    return this.countiesState.asObservable();
+  }
+
+  setAcquisitionsState(acquisitions: Acquisition) {
+    this.acquisitionsState.next(acquisitions);
+  }
+
+  getAcquisitionsState() {
+    return this.acquisitionsState.asObservable();
+  }
+
   getErrorMessage() {
     return this.errorMessage.asObservable();
   }

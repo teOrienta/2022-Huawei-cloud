@@ -10,7 +10,7 @@ export class HomeFacade {
   constructor(
     private homeService: HomeService,
     private readonly state: HomeState,
-    private readonly flowGraphApi: HomeApi
+    private readonly homeApi: HomeApi
   ) {}
 
   getPerformanceGraph() {
