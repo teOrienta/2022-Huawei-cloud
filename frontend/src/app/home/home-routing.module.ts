@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CsvImportationComponent } from './pages/csv-importation/csv-importation.component';
 import { FilterPageComponent } from './pages/filter-page/filter-page.component';
 import { ForbiddenPageComponent } from './pages/forbidden-page/forbidden-page.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'filter',
     component: FilterPageComponent,
+  },
+  {
+    path: 'importation',
+    component: CsvImportationComponent
   },
   {
     path: 'forbidden',

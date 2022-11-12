@@ -1,0 +1,35 @@
+<main>
+  <app-navbar></app-navbar>
+    <div class="content">
+      <p-card [formGroup]="form" header="Filters">
+        <div class="filter-div">
+          <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
+            placeholder="Start date" formControlName="startDate"></p-calendar>
+          
+          <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
+            placeholder="Final date" formControlName="endDate"></p-calendar>
+          
+          <div class="field">
+            <label for="csv-case" class="block">Case</label>
+            <input id="csv-case" type="username" aria-describedby="username1-help" pInputText formControlName="case" />
+            <small id="username1-help" class="block">Enter your username to reset your password.</small>
+          </div>
+          
+          <div class="field">
+            <label for="csv-activity" class="block">Activity</label>
+            <input id="csv-activity" type="username" aria-describedby="username1-help" pInputText formControlName="activity" />
+            <small id="username1-help" class="block">Enter your username to reset your password.</small>
+          </div>
+          
+          <div class="field">
+            <label for="csv-org:resource" class="block">org:resource</label>
+            <input id="csv-org:resource" type="username" aria-describedby="username1-help" pInputText
+              formControlName="orgResource" />
+            <small id="username1-help" class="block">Enter your username to reset your password.</small>
+          </div>
+        </div>
+        
+      </p-card>
+    </div>
+  <app-footer></app-footer>
+</main>
