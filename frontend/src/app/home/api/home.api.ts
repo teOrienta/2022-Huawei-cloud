@@ -17,4 +17,12 @@ export class HomeApi {
       responseType: 'text',
     });
   }
+
+  public getCounties() {
+    return this.http.get("/lister/modalidades");
+  }
+
+  public getAcquisitionTypes() {
+    return this.http.get("/lister/municipio");
+  }
 }

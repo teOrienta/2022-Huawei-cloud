@@ -1,0 +1,13 @@
+<nav navbar>
+  <div logoDiv>
+    <a href="/">
+      <img src="../../../../assets/despro_logo2.png" alt="logo-icon" />
+    </a>
+  </div>
+  <div class="routes">
+    <a href="/" [style]="url == '/' ? borderSelected : ''">Data flow</a>
+    <a href="/filter" [style]="url == '/filter' ? borderSelected : ''"
+      >Filtering</a
+    >
+  </div>
+</nav>

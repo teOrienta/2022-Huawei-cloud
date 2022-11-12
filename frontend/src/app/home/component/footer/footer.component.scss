@@ -1,0 +1,16 @@
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  height: 5rem;
+  padding: 1rem;
+
+  a {
+    color: unset;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+}
