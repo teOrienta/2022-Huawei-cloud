@@ -6,17 +6,16 @@ import Statistics from '../../shared/types/statistics';
 
 @Injectable({ providedIn: 'root' })
 export class HomeState {
-  private readonly graphSource = new BehaviorSubject<SafeHtml>(
-    this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
-  );
-  private readonly frequencyGraph = new BehaviorSubject<SafeHtml>(
-    this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
-  );
-  private readonly performanceGraph = new BehaviorSubject<SafeHtml>(
-    this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
+  private readonly graphSource = new BehaviorSubject<SafeHtml | null>(null);
+  private readonly frequencyGraph = new BehaviorSubject<SafeHtml | null>(null);
+  private readonly performanceGraph = new BehaviorSubject<SafeHtml | null>(
+    null
   );
   private readonly statistics = new BehaviorSubject<Statistics>({
-    cases: 0, activities: 0, averageCaseDuration: 0, averageActivityDuration: 0
+    cases: 0,
+    activities: 0,
+    averageCaseDuration: 0,
+    averageActivityDuration: 0,
   });
   private readonly graphGenerationParams = new BehaviorSubject<FlowGraphParams>(
     {} as FlowGraphParams
@@ -31,11 +30,15 @@ export class HomeState {
   }
 
   setFrequencyGraph(graphSource: string) {
-    this.frequencyGraph.next(this.sanitizer.bypassSecurityTrustHtml(graphSource));
+    this.frequencyGraph.next(
+      this.sanitizer.bypassSecurityTrustHtml(graphSource)
+    );
   }
 
   setPerformanceGraph(graphSource: string) {
-    this.performanceGraph.next(this.sanitizer.bypassSecurityTrustHtml(graphSource));
+    this.performanceGraph.next(
+      this.sanitizer.bypassSecurityTrustHtml(graphSource)
+    );
   }
 
   setStatistics(newStatistics: Statistics) {

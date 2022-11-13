@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     CardModule,
     ButtonModule,
     SliderModule,
+    SkeletonModule,
     SelectButtonModule,
   ],
   exports: [
@@ -22,6 +24,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     CardModule,
     ButtonModule,
     SliderModule,
+    SkeletonModule,
     SelectButtonModule,
   ],
 })
