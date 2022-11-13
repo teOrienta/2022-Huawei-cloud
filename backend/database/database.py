@@ -37,10 +37,10 @@ class PostgreSQL:
 
         function = EventlogRepository.select
         logs = self.call_function_with_session(
-            function, case_id, activity, resource,
-            start_date, end_date, analysis
+            function, start_date, end_date,
+            case_id, activity, resource, analysis
         )
 
-        return logs
+        return list(map(lambda x: x._asdict(), logs))
 
     

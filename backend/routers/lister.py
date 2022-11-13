@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from ..config import database
+from utils import database
 
 router = APIRouter(
     prefix="/lister",
@@ -8,20 +8,11 @@ router = APIRouter(
     responses={404: {"Lister": "Not found"}}
 )
 
-@router.get("/municipio/")
-async def get_municipios_list():
-    municipios = database.get_all_municipios()
+@router.get("/logs/")
+async def get_log_list():
+    logs = database.get_event_logs()
 
     return {
-        "municipios": municipios
-    }
-
-
-@router.get("/modalidades/")
-async def get_modalidades_list():
-    modalidades = database.get_all_modalidades()
-
-    return {
-        "modalidades": modalidades
+        "logs": logs
     }
 
