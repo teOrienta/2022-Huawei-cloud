@@ -5,3 +5,4 @@ pika
 uvicorn[standard]
 sqlalchemy
 psycopg2
+python-multipart

@@ -1,8 +1,7 @@
+from routers import filter, upload
 from fastapi import APIRouter
-from routers import filter
-from routers import lister
 
 routers = APIRouter()
 
 routers.include_router(filter.router)
-routers.include_router(lister.router)
+routers.include_router(upload.router)
