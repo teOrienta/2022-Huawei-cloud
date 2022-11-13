@@ -17,7 +17,7 @@ class EventlogRepository():
     
     @staticmethod
     def insert(session: Session, case_id: str, activity: str, resource: str,
-            start_timestamp: datetime, end_timestamp: datetime, csv_flag: bool = True) -> EventlogModel:
+            start_timestamp: datetime, end_timestamp: datetime, analysis: str) -> EventlogModel:
         """ Inserts a row (New Event) in Eventlog table. """
         new_event = Eventlog(
             caseId = case_id,
@@ -25,7 +25,7 @@ class EventlogRepository():
             resource = resource,
             startTimestamp = start_timestamp,
             endTimestamp = end_timestamp,
-            csvFlag = csv_flag
+            analysis = analysis
         )
         session.add(new_event)
         session.commit()
@@ -52,7 +52,7 @@ class EventlogRepository():
     @staticmethod
     def select(session: Session, start_date, end_date,
                 case_id: str = None, activity: str = None,
-                resource: str = None, csv_flag: bool = None) -> list[EventlogModel]:
+                resource: str = None, analysis: str = None) -> list[EventlogModel]:
         """ 
         Selects Eventlog table by:
             - caseId
@@ -60,7 +60,7 @@ class EventlogRepository():
             - resource
             - startTimestamp
             - endTimestamp
-            - csvFlag
+            - analysis
         """
 
         filters = {}
@@ -70,8 +70,8 @@ class EventlogRepository():
             filters["activity"] = activity
         if resource is not None:
             filters["resource"] = resource
-        if csv_flag is not None:
-            filters["csvFlag"] = csv_flag
+        if analysis is not None:
+            filters["analysis"] = analysis
 
         logs = (
             session.query(Eventlog)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, String, Boolean
+from sqlalchemy import Column, Integer, DateTime, String
 from database.config import Base, classproperty
 from collections import namedtuple
 
@@ -13,7 +13,7 @@ class Eventlog(Base):
     resource        = Column(String, nullable=True)
     startTimestamp  = Column(DateTime, nullable=True)
     endTimestamp    = Column(DateTime, nullable=False)
-    csvFlag         = Column(Boolean, nullable=False, default=True)
+    analysis        = Column(String, nullable=False)
 
     @classproperty
     def table_name(cls):
@@ -27,7 +27,7 @@ class Eventlog(Base):
             resource = {self.resource}
             startTimestamp = {self.startTimestamp}
             endTimestamp = {self.endTimestamp}
-            csvFlag = {self.csvFlag}
+            analysis = {self.analysis}
         )"""
 
     def __eq__(self, other):
@@ -40,9 +40,9 @@ class Eventlog(Base):
         yield self.resource
         yield self.startTimestamp
         yield self.endTimestamp
-        yield self.csvFlag
+        yield self.analysis
 
 EventlogModel = namedtuple("Eventlog", [
     "id", "caseId", "activity", "resource",
-    "startTimestamp", "endTimestamp", "csvFlag"
+    "startTimestamp", "endTimestamp", "analysis"
 ])
