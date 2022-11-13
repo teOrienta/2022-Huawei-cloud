@@ -1,6 +1,6 @@
-
-from database.controllers import LicitacoesRepository, PeripheralTableRepo
+from database.controllers import EventlogRepository
 from database.config import db_conn, verify_connection
+from datetime import datetime
 
 class PostgreSQL:
     def __init__(self):
@@ -13,12 +13,7 @@ class PostgreSQL:
         try:
             self.engine = self.connection.get_engine()
 
-            LicitacoesRepository.create(self.engine)
-            PeripheralTableRepo.create(self.engine, "modalidadeCompras")
-            PeripheralTableRepo.create(self.engine, "unidadesGestoras")
-            PeripheralTableRepo.create(self.engine, "orgaosSuperiores")
-            PeripheralTableRepo.create(self.engine, "municipios")
-            PeripheralTableRepo.create(self.engine, "orgaos")
+            EventlogRepository.create(self.engine)
 
             self.is_connected = True
         except Exception as e:
@@ -31,19 +26,21 @@ class PostgreSQL:
         with self.connection.get_session() as session:
             return func(session, *args, **kwargs)
 
-    # Municipios Functions
-    def get_all_municipios(self):
-        function = PeripheralTableRepo.select_all
-        municipios = self.call_function_with_session(function, "municipios")
+    # Eventlog functions
+    def get_event_logs(self, case_id: str = None, activity: str = None, resource: str = None,
+                    start_date: datetime = None, end_date: datetime = None, analysis: str = None):
+        
+        if start_date is None:
+            start_date = datetime(1970, 1, 1)
+        if end_date is None:
+            end_date = datetime.today()
 
-        return [ r[1] for r in municipios ]
+        function = EventlogRepository.select
+        logs = self.call_function_with_session(
+            function, case_id, activity, resource,
+            start_date, end_date, analysis
+        )
 
-    # Modalidades Functions
-    def get_all_modalidades(self):
-        function = PeripheralTableRepo.select_all
-        modalidades = self.call_function_with_session(function, "modalidades")
+        return logs
 
-        return [ r[1] for r in modalidades ]
-
-    # Licitacoes Functions
-
+    
