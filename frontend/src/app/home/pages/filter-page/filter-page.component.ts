@@ -5,6 +5,7 @@ import { HomeFacade } from '../../home.facade';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SafeHtml } from '@angular/platform-browser';
+import Statistics from 'src/app/shared/types/statistics';
 
 @Component({
   selector: 'app-filter-page',
@@ -17,8 +18,11 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
   mode: string = 'frequency';
 
+  statistics: Statistics = {} as Statistics;
+
   subscriptionP!: Subscription;
   subscriptionF!: Subscription;
+  subscriptionS!: Subscription;
 
   frequencyGraph!: SafeHtml | null;
   performanceGraph!: SafeHtml | null;
@@ -66,6 +70,11 @@ export class FilterPageComponent implements OnInit, OnDestroy {
         this.frequencyGraph = flow;
       },
     });
+    this.subscriptionS = this.homeFacade.getFilterStatistics().subscribe({
+      next: (value) => {
+        this.statistics = value;
+      },
+    });
   }
 
   changeMode(mode: string) {
@@ -100,6 +109,9 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     }
     if (this.subscriptionF) {
       this.subscriptionF.unsubscribe();
+    }
+    if (this.subscriptionS) {
+      this.subscriptionS.unsubscribe();
     }
   }
 }

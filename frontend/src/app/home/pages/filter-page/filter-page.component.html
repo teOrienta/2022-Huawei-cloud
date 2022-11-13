@@ -47,6 +47,16 @@
             (onOptionClick)="changeMode(mode)"
           ></p-selectButton>
         </div>
+
+        <div class="filter-statistics">
+          <span>Cases: {{ statistics.cases }}</span>
+          <span>Case duration: {{ statistics.averageCaseDuration }} </span>
+
+          <span>Activities: {{ statistics.activities }}</span>
+          <span
+            >Activity duration: {{ statistics.averageActivityDuration }}</span
+          >
+        </div>
       </div>
     </p-card>
     <app-flow [graphSource]="graphSource"></app-flow>

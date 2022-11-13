@@ -13,6 +13,10 @@ export class HomeFacade {
     private readonly flowGraphApi: HomeApi
   ) {}
 
+  getFilterStatistics() {
+    return this.state.getStatistics();
+  }
+
   getPerformanceGraph() {
     return this.state.getPerformanceGraph();
   }
