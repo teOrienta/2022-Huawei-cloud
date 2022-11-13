@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlowGraphParams } from 'src/app/shared/types/flow-graph-params';
 import { HomeFacade } from '../../home.facade';
@@ -13,42 +13,16 @@ export class FilterPageComponent implements OnInit {
   form: FormGroup;
   detailLevel: number = 0;
   timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
-  valueRange: number = 0;
-
-  acquisition!: string; 
-  acquisitionFilter!: string[];
-  acquisitionTypes!: string[];
-
-  county!: string;
-  countyFilter!: string[];
-  counties!: string[];
-
-  suggestions: string[] = ["modalit1", "mod2", "mod3"]; 
-  @ViewChild('graph', { static: false }) graph!: ElementRef;
 
   constructor(
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
-    this.homeFacade.fetchCounties();
-    this.homeFacade.fetchAcquisitionTypes();
-
-    this.homeFacade.getCountiesState().subscribe((counties) => {
-      //this.counties = counties;
-    })
-
-    this.homeFacade.getAcquisitionTypesState().subscribe((acquisitionTypes) => {
-      //this.acquisitionTypes = acquisitionTypes;
-    })
-
     this.form = formbuilder.group({
       startDate: [null],
       endDate: [null],
       detailLevel: [0],
       mode: ['frequency'],
-      valueRange: [0],
-      acquisition: [null],
-      county: [null],
     });
 
     this.form.valueChanges.subscribe((e) => {
@@ -84,13 +58,4 @@ export class FilterPageComponent implements OnInit {
     };
     this.homeFacade.setGraphParams(graphParams);
   }
-
-  searchAcquisition(event: any) {
-
-  }
-
-  searchCounty(event: any) {
-
-  }
-
 }
