@@ -6,7 +6,7 @@ class Eventlog(Base):
     """ Eventlog Entity """
 
     __table_args__  = { 'extend_existing': True } 
-    __tablename__   = f"Eventlog"
+    __tablename__   = f"eventlog"
     id              = Column(Integer, primary_key=True)
     caseId          = Column(String, nullable=False)
     activity        = Column(String, nullable=False)
