@@ -1,13 +1,15 @@
-from datetime import datetime
 from pm4py.objects.log.obj import EventLog
+from .streaming import Parameters
+from datetime import datetime
 
 def filter_log_by_data(log: EventLog, start_date: datetime, end_date: datetime):
     """ Returns the filtered log. Checks if last date of trace occurred within timeframe. """
-    filtered_log = EventLog()
+    filtered_log = EventLog(attributes = log.attributes)
+    timestamp_key = log.attributes[Parameters.TIMESTAMP_KEY]
     
     for trace in log:
-        date_last_event = (trace[-1])["dt_fim"]
-        if( start_date < date_last_event < end_date):
+        date_last_event = trace[-1][timestamp_key]
+        if start_date < date_last_event < end_date:
             filtered_log.append(trace)
 
     return filtered_log

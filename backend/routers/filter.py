@@ -1,9 +1,9 @@
-from datetime import datetime
+from utils import (filter_log, get_log_statistics, generate_svg,
+                   streaming_eventlog, eventlog_cache)
+from fastapi.responses import FileResponse
 from fastapi import APIRouter, status
 from pydantic import BaseModel
-
-from utils import filter_log, get_log_statistics, generate_svg
-from ..config import event_log_cache_instance
+from datetime import datetime
 
 router = APIRouter(
     prefix="/filter",
@@ -22,14 +22,15 @@ async def filter(request: FilterInput):
     end_date = request.endDate
     dfg_detail_level = request.detailLevel
 
-    original_log = event_log_cache_instance.get_log()
+    original_log = streaming_eventlog.get()
+    eventlog_cache.save_log(original_log)
 
-    if (start_date == ""):        
+    if not start_date:        
         start_date = datetime(1970, 1, 1)
     else:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
     
-    if (end_date == ""):
+    if not end_date:
         end_date = datetime.today()
     else:
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
@@ -43,7 +44,7 @@ async def filter(request: FilterInput):
     if len(filtered_log) == 0:
         return status.HTTP_404_NOT_FOUND
 
-    event_log_cache_instance.save_filtered_log(filtered_log)
+    eventlog_cache.save_filtered_log(filtered_log)
     stats = get_log_statistics(filtered_log)
 
     dfg_detail_percentage = (1 + dfg_detail_level) * 20 / 100
@@ -52,6 +53,6 @@ async def filter(request: FilterInput):
     return {
         "filters": request.dict(),
         "statistics": stats,
-        "freq_svg": freq_svg_str,
-        "perf_svg": perf_svg_str
+        "freq_svg": FileResponse(freq_svg_str),
+        "perf_svg": FileResponse(perf_svg_str)
     }

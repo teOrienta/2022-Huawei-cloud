@@ -1,7 +1,5 @@
 from pm4py.objects.log.obj import EventLog
-
-START_TIMESTAMP_KEY = 'dt_inicio'
-END_TIMESTAMP_KEY = 'dt_fim'
+from .streaming import Parameters
 
 def average(l: list):
     avg = 0
@@ -20,6 +18,9 @@ def get_log_statistics(eventlog: EventLog):
         "averageActivityDuration": int (average duration of each activity, in seconds)
     }
     """
+    timestamp_key = eventlog.attributes[Parameters.TIMESTAMP_KEY]
+    start_timestamp_key = eventlog.attributes[Parameters.START_TIMESTAMP_KEY]
+
     activities_amount = 0
     case_durations = []
     activities_durations = []
@@ -29,7 +30,7 @@ def get_log_statistics(eventlog: EventLog):
         activities_amount += len(trace)
 
         for activity in trace:
-            activity_duration = (activity[END_TIMESTAMP_KEY] - activity[START_TIMESTAMP_KEY]).total_seconds()
+            activity_duration = (activity[timestamp_key] - activity[start_timestamp_key]).total_seconds()
             activities_durations.append(activity_duration)
             trace_duration += activity_duration
 
