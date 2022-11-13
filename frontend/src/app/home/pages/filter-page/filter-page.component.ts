@@ -1,18 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlowGraphParams } from 'src/app/shared/types/flow-graph-params';
 import { HomeFacade } from '../../home.facade';
 import { formatDate } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-filter-page',
   templateUrl: './filter-page.component.html',
   styleUrls: ['./filter-page.component.scss'],
 })
-export class FilterPageComponent implements OnInit {
+export class FilterPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   detailLevel: number = 0;
   timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
+  mode: string = 'frequency';
+
+  subscriptionP!: Subscription;
+  subscriptionF!: Subscription;
+
+  frequencyGraph!: SafeHtml | null;
+  performanceGraph!: SafeHtml | null;
+  graphSource!: SafeHtml | null;
 
   constructor(
     private formbuilder: FormBuilder,
@@ -22,15 +32,19 @@ export class FilterPageComponent implements OnInit {
       startDate: [null],
       endDate: [null],
       detailLevel: [0],
-      mode: ['frequency'],
     });
 
     this.form.valueChanges.subscribe((e) => {
       this.updateBounce();
     });
+
+    this.homeFacade.filterFlowGraph(this.form.value);
+    this.setGraph();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.changeMode('frequency');
+  }
 
   updateBounce() {
     if (this.timeOutState) {
@@ -39,6 +53,28 @@ export class FilterPageComponent implements OnInit {
     this.timeOutState = setTimeout(() => {
       this.updateFlow();
     }, 1000);
+  }
+
+  setGraph() {
+    this.subscriptionP = this.homeFacade.getPerformanceGraph().subscribe({
+      next: (flow) => {
+        this.performanceGraph = flow;
+      },
+    });
+    this.subscriptionF = this.homeFacade.getFrequencyGraph().subscribe({
+      next: (flow) => {
+        this.frequencyGraph = flow;
+      },
+    });
+  }
+
+  changeMode(mode: string) {
+    console.log(mode);
+    if (mode === 'frequency') {
+      this.graphSource = this.frequencyGraph;
+    } else {
+      this.graphSource = this.performanceGraph;
+    }
   }
 
   updateFlow() {
@@ -54,8 +90,16 @@ export class FilterPageComponent implements OnInit {
       start_date: formatedDates.start,
       end_date: formatedDates.end,
       detailLevel: this.form.controls['detailLevel'].value,
-      mode: this.form.controls['mode'].value,
     };
     this.homeFacade.filterFlowGraph(graphParams);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionP) {
+      this.subscriptionP.unsubscribe();
+    }
+    if (this.subscriptionF) {
+      this.subscriptionF.unsubscribe();
+    }
   }
 }

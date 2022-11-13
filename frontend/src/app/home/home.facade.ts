@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { first } from 'rxjs';
-import {
-  FetchFlowGraph,
-  FlowGraphParams,
-} from '../shared/types/flow-graph-params';
+import { FlowGraphParams } from '../shared/types/flow-graph-params';
 import { HomeState } from './state/home.state';
 import { HomeApi } from './api/home.api';
 import { HomeService } from './services/home.service';
@@ -15,6 +12,14 @@ export class HomeFacade {
     private readonly state: HomeState,
     private readonly flowGraphApi: HomeApi
   ) {}
+
+  getPerformanceGraph() {
+    return this.state.getPerformanceGraph();
+  }
+
+  getFrequencyGraph() {
+    return this.state.getFrequencyGraph();
+  }
 
   getGraphSource() {
     return this.state.getGraphSource();
@@ -29,8 +34,7 @@ export class HomeFacade {
   }
 
   fetchFlowGraph(
-    fetchParams: FetchFlowGraph = {
-      params: {} as FlowGraphParams,
+    fetchParams = {
       successfulCallback: () => {},
     }
   ) {
