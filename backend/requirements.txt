@@ -4,3 +4,4 @@ fastapi
 pika
 uvicorn[standard]
 sqlalchemy
+psycopg2
