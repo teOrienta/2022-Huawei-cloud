@@ -56,6 +56,6 @@ export class FilterPageComponent implements OnInit {
       detailLevel: this.form.controls['detailLevel'].value,
       mode: this.form.controls['mode'].value,
     };
-    this.homeFacade.setGraphParams(graphParams);
+    this.homeFacade.filterFlowGraph(graphParams);
   }
 }

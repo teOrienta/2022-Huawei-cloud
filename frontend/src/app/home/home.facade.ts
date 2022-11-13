@@ -37,12 +37,32 @@ export class HomeFacade {
     const { successfulCallback } = fetchParams;
     this.state.setLoading(true);
     this.flowGraphApi
-      .downloadFlowGraph()
+      .getLiveFlowGraph()
       .pipe(first())
       .subscribe({
         next: (data) => {
           this.state.setGraphSource(data);
           successfulCallback();
+        },
+        complete: () => this.state.setLoading(false),
+        error: (error: Error) => {
+          this.state.setErrorMessage(error.message);
+          this.state.setLoading(false);
+        },
+      });
+  }
+
+  filterFlowGraph(params: FlowGraphParams) {
+    this.state.setLoading(true);
+    this.flowGraphApi
+      .filterFlowGraph(params)
+      .pipe(first())
+      .subscribe({
+        next: (data) => {
+          this.state.setGraphGenerationParams(params);
+          this.state.setFrequencyGraph(data.freq_svg);
+          this.state.setPerformanceGraph(data.perf_svg);
+          this.state.setStatistics(data.statistics);
         },
         complete: () => this.state.setLoading(false),
         error: (error: Error) => {

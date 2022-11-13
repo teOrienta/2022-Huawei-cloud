@@ -2,12 +2,22 @@ import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FlowGraphParams } from 'src/app/shared/types/flow-graph-params';
+import Statistics from '../../shared/types/statistics';
 
 @Injectable({ providedIn: 'root' })
 export class HomeState {
   private readonly graphSource = new BehaviorSubject<SafeHtml>(
     this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
   );
+  private readonly frequencyGraph = new BehaviorSubject<SafeHtml>(
+    this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
+  );
+  private readonly performanceGraph = new BehaviorSubject<SafeHtml>(
+    this.sanitizer.bypassSecurityTrustHtml(`<svg><\svg>`)
+  );
+  private readonly statistics = new BehaviorSubject<Statistics>({
+    cases: 0, activities: 0, averageCaseDuration: 0, averageActivityDuration: 0
+  });
   private readonly graphGenerationParams = new BehaviorSubject<FlowGraphParams>(
     {} as FlowGraphParams
   );
@@ -20,12 +30,36 @@ export class HomeState {
     return this.graphSource.asObservable();
   }
 
+  setFrequencyGraph(graphSource: string) {
+    this.frequencyGraph.next(this.sanitizer.bypassSecurityTrustHtml(graphSource));
+  }
+
+  setPerformanceGraph(graphSource: string) {
+    this.performanceGraph.next(this.sanitizer.bypassSecurityTrustHtml(graphSource));
+  }
+
+  setStatistics(newStatistics: Statistics) {
+    this.statistics.next(newStatistics);
+  }
+
   setGraphSource(graphSource: string) {
     this.graphSource.next(this.sanitizer.bypassSecurityTrustHtml(graphSource));
   }
 
   getGraphGenerationParams() {
     return this.graphGenerationParams.asObservable();
+  }
+
+  getFrequencyGraph() {
+    return this.frequencyGraph.asObservable();
+  }
+
+  getPerformanceGraph() {
+    return this.performanceGraph.asObservable();
+  }
+
+  getStatistics() {
+    return this.statistics.asObservable();
   }
 
   setGraphGenerationParams(value: FlowGraphParams) {
