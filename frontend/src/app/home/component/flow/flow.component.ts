@@ -3,11 +3,10 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  OnDestroy,
   AfterContentChecked,
+  Input,
 } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 import { HomeFacade } from '../../home.facade';
 import * as svgPanZoom from 'svg-pan-zoom';
 
@@ -16,27 +15,14 @@ import * as svgPanZoom from 'svg-pan-zoom';
   templateUrl: './flow.component.html',
   styleUrls: ['./flow.component.scss'],
 })
-export class FlowComponent implements OnInit, OnDestroy, AfterContentChecked {
-  subscription!: Subscription;
-  changeCount: number = 0;
-  graphSource!: SafeHtml | null;
+export class FlowComponent implements OnInit, AfterContentChecked {
   @ViewChild('graph', { static: false }) graph!: ElementRef;
+  @Input() graphSource!: SafeHtml | null;
+  changeCount: number = 0;
 
   constructor(private homeFacade: HomeFacade) {}
 
-  ngOnInit(): void {
-    this.subscription = this.homeFacade.getGraphSource().subscribe({
-      next: (flow) => {
-        this.graphSource = flow;
-      },
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  ngOnInit(): void {}
 
   ngAfterContentChecked(): void {
     this.changeCount += 1;

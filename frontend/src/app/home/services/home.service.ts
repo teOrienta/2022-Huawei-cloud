@@ -15,7 +15,7 @@ export class HomeService {
 
   public downloadFlow() {
     this.state
-      .downloadFlowGraph()
+      .getLiveFlowGraph()
       .pipe(take(1))
       .subscribe((value) => {
         return this.fileSaverService.saveText(value, 'fluxo.svg');

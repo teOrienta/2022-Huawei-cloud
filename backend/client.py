@@ -1,5 +1,5 @@
 import logging, pika, traceback, time
-from config import get_app_config
+from utils import get_app_config
    
 def consume_events_queue(callback: callable):
     logger = logging.getLogger(__name__)

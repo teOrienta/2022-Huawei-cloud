@@ -1,10 +1,9 @@
 from dotenv import dotenv_values
+from utils import EventLogCache
+from database import PostgreSQL
 import os
 
-from .event_log_cache import EventLogCache
-from database import PostgreSQL
-
-event_log_cache_instance = EventLogCache()
+eventlog_cache = EventLogCache()
 database = PostgreSQL()
 
 def get_app_config(env_file_path: str) -> dict:
