@@ -1,2 +1,1 @@
-from .peripheral_table_repo import PeripheralTableRepo
-from .licitacoes_repo import LicitacoesRepository
+from .eventlog_repo import EventlogRepository
