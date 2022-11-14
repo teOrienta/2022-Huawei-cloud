@@ -37,10 +37,12 @@ class PostgreSQL:
             end_date = datetime.today()
 
         function = EventlogRepository.select
-        return self.call_function_with_session(
-            function, case_id, activity, resource,
-            start_date, end_date, analysis
+        logs = self.call_function_with_session(
+            function, start_date, end_date,
+            case_id, activity, resource, analysis
         )
+
+        return list(map(lambda x: x._asdict(), logs))
 
     def insert_many_log_events(self, events_list: list[dict]):
         function = EventlogRepository.insert_many
