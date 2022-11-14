@@ -20,6 +20,7 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
   fileParams: UploadParams = {} as UploadParams;
 
   subscription!: Subscription;
+  loading: boolean = false;
 
   constructor(
     private homeFacade: HomeFacade,
@@ -91,11 +92,14 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
     this.fileParams.orgResource = values.orgResource;
 
     if (this.fileToUpload.name.indexOf('.csv') !== -1) {
+      this.loading = true;
       this.uploadFileService
         .postFile(this.fileToUpload as File, this.fileParams)
         .pipe(first())
         .subscribe({
-          next: (e) => {}, // Close loading
+          next: (e) => {
+            this.loading = !e;
+          },
         });
     }
   }

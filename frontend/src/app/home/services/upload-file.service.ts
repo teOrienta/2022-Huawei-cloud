@@ -10,13 +10,17 @@ import {
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
-import { UploadParams } from 'src/app/shared/types/upload-params';
+import {
+  UploadParams,
+  uploadResponse,
+} from 'src/app/shared/types/upload-params';
+import { HomeState } from '../state/home.state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UploadFileService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private state: HomeState) {}
   private fileSource = new BehaviorSubject<File | null>(null);
   currentFile = this.fileSource.asObservable();
 
@@ -43,7 +47,11 @@ export class UploadFileService {
         }),
       })
       .pipe(
-        map(() => {
+        map((e: uploadResponse | any) => {
+          this.state.setStatistics(e.statistics);
+          this.state.setFrequencyGraph(e.freq_svg);
+          this.state.setPerformanceGraph(e.perf_svg);
+
           return true;
         }),
         catchError((e: HttpErrorResponse) => this.handleError(e))

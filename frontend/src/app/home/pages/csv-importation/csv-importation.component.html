@@ -73,8 +73,7 @@
         </tr>
         <tr>
           <td *ngFor="let column of exampleColumns">
-          <input type="text" value="{{column}}"
-                  pInputText readonly/>
+            <input type="text" value="{{ column }}" pInputText readonly />
           </td>
         </tr>
       </table>
@@ -89,3 +88,13 @@
   </div>
   <app-footer></app-footer>
 </main>
+
+<p-dialog
+  header="Loading"
+  [(visible)]="loading"
+  [modal]="true"
+  [closable]="false"
+  [contentStyle]="{ display: 'flex', justifyContent: 'center' }"
+>
+  <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-dialog>

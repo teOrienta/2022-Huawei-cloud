@@ -28,7 +28,6 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
-
     this.form = formbuilder.group({
       startDate: [null],
       endDate: [null],
@@ -40,7 +39,6 @@ export class FilterPageComponent implements OnInit, OnDestroy {
       this.updateBounce();
     });
 
-    this.homeFacade.filterFlowGraph(this.form.value);
     this.setGraph();
   }
 
@@ -68,6 +66,9 @@ export class FilterPageComponent implements OnInit, OnDestroy {
         this.frequencyGraph = flow;
       },
     });
+    if (this.performanceGraph == null) {
+      this.homeFacade.filterFlowGraph(this.form.value);
+    }
   }
 
   changeMode(mode: string) {
@@ -92,6 +93,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
       endDate: formattedDates.end,
       detailLevel: this.form.controls['detailLevel'].value,
     };
+
     this.homeFacade.filterFlowGraph(graphParams);
   }
 
