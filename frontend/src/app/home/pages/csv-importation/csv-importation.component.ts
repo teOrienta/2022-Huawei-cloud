@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UploadParams } from 'src/app/shared/types/upload-params';
 import { UploadFileService } from '../../services/upload-file.service';
 import { first, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-csv-importation',
@@ -23,6 +24,7 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   constructor(
+    private router: Router,
     private homeFacade: HomeFacade,
     private formbuilder: FormBuilder,
     private uploadFileService: UploadFileService
@@ -99,6 +101,7 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (e) => {
             this.loading = !e;
+            this.router.navigate(['/filter']);
           },
         });
     }

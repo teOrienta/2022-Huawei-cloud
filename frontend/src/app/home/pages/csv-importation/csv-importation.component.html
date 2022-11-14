@@ -90,11 +90,15 @@
 </main>
 
 <p-dialog
-  header="Loading"
-  [(visible)]="loading"
+  header=""
   [modal]="true"
   [closable]="false"
-  [contentStyle]="{ display: 'flex', justifyContent: 'center' }"
+  [(visible)]="loading"
+  [contentStyle]="{
+    display: 'flex', justifyContent: 'center',
+    width: 'max-content', height: 'max-content',
+    overflow: 'hidden'
+  }"
 >
   <i class="pi pi-spin pi-spinner" style="font-size: 10em"></i>
 </p-dialog>
