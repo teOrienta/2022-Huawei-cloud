@@ -1,8 +1,31 @@
 version: "3.3"
 
 services:
+  database:
+    image: postgres:10-bullseye
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./database-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: desprodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - project-network
+    ports:
+      - "5432:5432"
+
   rabbitmq:
     image: rabbitmq:management
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     ports:
       - 5672:5672
       - 15672:15672
@@ -17,7 +40,7 @@ services:
       - project-network
     depends_on:
       - rabbitmq
-
+      - database
     env_file:
       - .env
 
@@ -33,6 +56,7 @@ services:
       - project-network
     depends_on:
       - producer
+      - database
     env_file:
       - .env
 

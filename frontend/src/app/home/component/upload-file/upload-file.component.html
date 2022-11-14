@@ -1,0 +1,10 @@
+<button label="Select a file" pButton (click)="upload()">
+  <input
+    type="file"
+    name="arquivo"
+    id="arquivo"
+    #arquivo
+    accept=".csv, .xes, .zip"
+    (change)="handleFileInput($event)"
+  />
+</button>

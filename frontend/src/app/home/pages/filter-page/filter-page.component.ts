@@ -15,7 +15,6 @@ import Statistics from 'src/app/shared/types/statistics';
 export class FilterPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   detailLevel: number = 0;
-  timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
   mode: string = 'frequency';
 
   statistics: Statistics = {} as Statistics;
@@ -28,35 +27,25 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   performanceGraph!: SafeHtml | null;
   graphSource!: SafeHtml | null;
 
+  initialDate: Date = new Date();
+  maxDate: Date = new Date();
+
   constructor(
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
     this.form = formbuilder.group({
       startDate: [null],
-      endDate: [null],
+      endDate: [this.maxDate],
       detailLevel: [0],
+      mode: ['frequency'],
     });
 
-    this.form.valueChanges.subscribe((e) => {
-      this.updateBounce();
-    });
-
-    this.homeFacade.filterFlowGraph(this.form.value);
     this.setGraph();
   }
 
   ngOnInit(): void {
     this.changeMode('frequency');
-  }
-
-  updateBounce() {
-    if (this.timeOutState) {
-      clearTimeout(this.timeOutState);
-    }
-    this.timeOutState = setTimeout(() => {
-      this.updateFlow();
-    }, 1000);
   }
 
   setGraph() {
@@ -68,6 +57,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     this.subscriptionF = this.homeFacade.getFrequencyGraph().subscribe({
       next: (flow) => {
         this.frequencyGraph = flow;
+        this.graphSource = flow;
       },
     });
     this.subscriptionS = this.homeFacade.getFilterStatistics().subscribe({
@@ -75,10 +65,10 @@ export class FilterPageComponent implements OnInit, OnDestroy {
         this.statistics = value;
       },
     });
+    this.homeFacade.filterFlowGraph(this.form.value);
   }
 
   changeMode(mode: string) {
-    console.log(mode);
     if (mode === 'frequency') {
       this.graphSource = this.frequencyGraph;
     } else {
@@ -87,19 +77,20 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   updateFlow() {
-    const formatedDates = {
-      start: this.form.controls['startDate'].value
-        ? formatDate(this.form.controls['startDate'].value, 'd/MM/yy', 'pt-BR')
-        : null,
-      end: this.form.controls['endDate'].value
-        ? formatDate(this.form.controls['endDate'].value, 'd/MM/yy', 'pt-BR')
-        : null,
+    const formattedDates = {
+      start: formatDate(
+        this.form.controls['startDate'].value,
+        'y-MM-dd',
+        'pt-BR'
+      ),
+      end: formatDate(this.form.controls['endDate'].value, 'y-MM-dd', 'pt-BR'),
     };
     const graphParams: FlowGraphParams = {
-      start_date: formatedDates.start,
-      end_date: formatedDates.end,
+      startDate: formattedDates.start,
+      endDate: formattedDates.end,
       detailLevel: this.form.controls['detailLevel'].value,
     };
+
     this.homeFacade.filterFlowGraph(graphParams);
   }
 

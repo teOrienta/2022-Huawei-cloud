@@ -1,0 +1,100 @@
+<main>
+  <app-navbar></app-navbar>
+  <div class="content">
+    <p>
+      Load your file with these formats:
+      <b>CSV</b> or <b>XES</b>.
+    </p>
+
+    <app-upload-file></app-upload-file>
+
+    <p-card
+      *ngIf="this.fileToUpload !== null"
+      [formGroup]="form"
+      header="Setup columns"
+    >
+      <span class="p-float-label" [style]="{ marginBottom: '1rem' }">
+        <input
+          pInputText
+          type="text"
+          id="inputName"
+          formControlName="analysisName"
+        />
+        <label for="inputName">Analysis' name</label>
+      </span>
+
+      <table>
+        <tr>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Case key name"
+              formControlName="case"
+              (onChange)="onChangeColumn($event, 0)"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Activity key name"
+              formControlName="activity"
+              (onChange)="onChangeColumn($event, 1)"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Org:resource"
+              formControlName="orgResource"
+              (onChange)="onChangeColumn($event, 2)"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Start timestamp"
+              formControlName="startTimestamp"
+              (onChange)="onChangeColumn($event, 3)"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Timestamp"
+              formControlName="timestamp"
+              (onChange)="onChangeColumn($event, 4)"
+            ></p-dropdown>
+          </th>
+        </tr>
+        <tr>
+          <td *ngFor="let column of exampleColumns">
+            <input type="text" value="{{ column }}" pInputText readonly />
+          </td>
+        </tr>
+      </table>
+    </p-card>
+    <button
+      pButton
+      type="button"
+      label="Upload your file"
+      [disabled]="!form.valid"
+      (click)="uploadFile()"
+    ></button>
+  </div>
+  <app-footer></app-footer>
+</main>
+
+<p-dialog
+  header="Loading"
+  [(visible)]="loading"
+  [modal]="true"
+  [closable]="false"
+  [contentStyle]="{ display: 'flex', justifyContent: 'center' }"
+>
+  <i class="pi pi-spin pi-spinner" style="font-size: 10em"></i>
+</p-dialog>

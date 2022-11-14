@@ -7,6 +7,10 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
@@ -20,6 +24,10 @@ import { SkeletonModule } from 'primeng/skeleton';
     SliderModule,
     SkeletonModule,
     SelectButtonModule,
+    InputTextModule,
+    DropdownModule,
+    DialogModule,
+    AutoCompleteModule,
   ],
   exports: [
     MenuModule,
@@ -29,6 +37,10 @@ import { SkeletonModule } from 'primeng/skeleton';
     SliderModule,
     SkeletonModule,
     SelectButtonModule,
+    InputTextModule,
+    DropdownModule,
+    DialogModule,
+    AutoCompleteModule,
   ],
 })
 export class PrimeComponentsModule {}

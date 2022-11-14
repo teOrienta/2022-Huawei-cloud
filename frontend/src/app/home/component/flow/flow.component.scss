@@ -3,6 +3,7 @@ p-card {
 
   .image-container {
     max-height: 35em;
+    height: 100%;
     overflow: hidden;
     position: relative;
     cursor: grab;
@@ -14,4 +15,9 @@ p-card {
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
   }
+}
+::ng-deep .container .p-card,
+::ng-deep .container .p-card > div,
+::ng-deep .container .p-card > div > div {
+  height: 100%;
 }

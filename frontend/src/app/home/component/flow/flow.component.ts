@@ -38,6 +38,7 @@ export class FlowComponent implements OnInit, AfterContentChecked {
       zoomEnabled: true,
       controlIconsEnabled: true,
       fit: true,
+      minZoom: 0,
       center: true,
       dblClickZoomEnabled: false,
     });

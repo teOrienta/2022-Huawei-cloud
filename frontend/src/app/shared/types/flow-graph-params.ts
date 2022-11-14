@@ -1,6 +1,6 @@
 interface FlowGraphParams {
-  start_date: string | null | undefined;
-  end_date: string | null | undefined;
+  startDate: string | null | undefined;
+  endDate: string | null | undefined;
   detailLevel: number | null | undefined;
 }
 

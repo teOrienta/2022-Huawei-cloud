@@ -11,6 +11,8 @@
             [readonlyInput]="true"
             placeholder="Start date"
             formControlName="startDate"
+            [maxDate]="maxDate"
+            (onSelect)="updateFlow()"
           ></p-calendar>
 
           <p-calendar
@@ -20,6 +22,8 @@
             [readonlyInput]="true"
             placeholder="Final date"
             formControlName="endDate"
+            [maxDate]="maxDate"
+            (onSelect)="updateFlow()"
           ></p-calendar>
 
           <div>
@@ -30,6 +34,7 @@
               [max]="5"
               [step]="1"
               [(ngModel)]="detailLevel"
+              (onSlideEnd)="updateFlow()"
             ></p-slider>
           </div>
         </div>
@@ -59,7 +64,10 @@
         </div>
       </div>
     </p-card>
-    <app-flow [graphSource]="graphSource"></app-flow>
+    <app-flow 
+      [graphSource]="graphSource"
+      style="flex:1"
+    ></app-flow>
     <app-footer></app-footer>
   </div>
 </main>

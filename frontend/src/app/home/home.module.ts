@@ -14,6 +14,9 @@ import { FilterPageComponent } from './pages/filter-page/filter-page.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { FlowComponent } from './component/flow/flow.component';
+import { CsvImportationComponent } from './pages/csv-importation/csv-importation.component';
+import { UploadFileComponent } from './component/upload-file/upload-file.component';
+import { UploadFileService } from './services/upload-file.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,8 @@ import { FlowComponent } from './component/flow/flow.component';
     NavbarComponent,
     FooterComponent,
     FlowComponent,
+    CsvImportationComponent,
+    UploadFileComponent,
   ],
   imports: [HomeRoutingModule, SharedModule],
   providers: [
@@ -32,6 +37,7 @@ import { FlowComponent } from './component/flow/flow.component';
     HomeApi,
     HomeInitializerProvider,
     HomeService,
+    UploadFileService,
   ],
 })
 export class HomeModule {}
