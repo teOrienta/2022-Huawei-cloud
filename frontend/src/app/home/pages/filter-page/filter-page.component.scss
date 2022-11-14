@@ -1,5 +1,8 @@
 main {
   display: flex;
+  @media screen and (max-width: 800px) {
+    margin-top: 1.5rem;
+  }
 
   .content {
     width: 100%;
@@ -26,5 +29,11 @@ main {
         }
       }
     }
+  }
+}
+
+app-navbar {
+  @media screen and (max-width: 800px) {
+    position: absolute;
   }
 }
