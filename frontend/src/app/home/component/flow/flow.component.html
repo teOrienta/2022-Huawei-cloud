@@ -1,4 +1,5 @@
 <p-card class="container">
   <div class="image-container" #graph
       [innerHTML]="graphSource"></div>
+  <p-skeleton height="20rem" *ngIf="graphSource == null"></p-skeleton>
 </p-card>

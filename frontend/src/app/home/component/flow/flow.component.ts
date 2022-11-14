@@ -26,7 +26,7 @@ export class FlowComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked(): void {
     this.changeCount += 1;
-    if (this.changeCount > 2) {
+    if (this.changeCount > 2 && this.graphSource != null) {
       this.renderSvgPanZoom();
     }
   }

@@ -29,6 +29,12 @@ main {
         }
       }
     }
+
+    .filter-statistics {
+      align-self: end;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
 

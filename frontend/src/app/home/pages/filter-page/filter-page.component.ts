@@ -5,6 +5,7 @@ import { HomeFacade } from '../../home.facade';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SafeHtml } from '@angular/platform-browser';
+import Statistics from 'src/app/shared/types/statistics';
 
 @Component({
   selector: 'app-filter-page',
@@ -16,8 +17,11 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   detailLevel: number = 0;
   mode: string = 'frequency';
 
+  statistics: Statistics = {} as Statistics;
+
   subscriptionP!: Subscription;
   subscriptionF!: Subscription;
+  subscriptionS!: Subscription;
 
   frequencyGraph!: SafeHtml | null;
   performanceGraph!: SafeHtml | null;
@@ -56,6 +60,11 @@ export class FilterPageComponent implements OnInit, OnDestroy {
         this.graphSource = flow;
       },
     });
+    this.subscriptionS = this.homeFacade.getFilterStatistics().subscribe({
+      next: (value) => {
+        this.statistics = value;
+      },
+    });
     this.homeFacade.filterFlowGraph(this.form.value);
   }
 
@@ -91,6 +100,9 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     }
     if (this.subscriptionF) {
       this.subscriptionF.unsubscribe();
+    }
+    if (this.subscriptionS) {
+      this.subscriptionS.unsubscribe();
     }
   }
 }

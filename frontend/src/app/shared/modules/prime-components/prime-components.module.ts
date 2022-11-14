@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MenuModule } from 'primeng/menu';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -10,15 +11,18 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    MenuModule,
     CalendarModule,
     CardModule,
     ButtonModule,
     SliderModule,
+    SkeletonModule,
     SelectButtonModule,
     InputTextModule,
     DropdownModule,
@@ -26,10 +30,12 @@ import { DialogModule } from 'primeng/dialog';
     AutoCompleteModule,
   ],
   exports: [
+    MenuModule,
     CalendarModule,
     CardModule,
     ButtonModule,
     SliderModule,
+    SkeletonModule,
     SelectButtonModule,
     InputTextModule,
     DropdownModule,
