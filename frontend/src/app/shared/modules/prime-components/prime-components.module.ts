@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { MenuModule } from 'primeng/menu';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -12,6 +13,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   declarations: [],
   imports: [
     CommonModule,
+    MenuModule,
     CalendarModule,
     CardModule,
     ButtonModule,
@@ -20,6 +22,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     SelectButtonModule,
   ],
   exports: [
+    MenuModule,
     CalendarModule,
     CardModule,
     ButtonModule,

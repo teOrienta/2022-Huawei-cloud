@@ -1,4 +1,4 @@
-<nav navbar>
+<nav navbar *ngIf="mediaQuery; else navMenu">
   <div logoDiv>
     <a href="/">
       <img src="../../../../assets/despro_logo2.png" alt="logo-icon" />
@@ -11,3 +11,14 @@
     >
   </div>
 </nav>
+
+<ng-template #navMenu>
+  <button
+    type="button"
+    pButton
+    icon="pi pi-bars"
+    label="Menu"
+    (click)="menu.toggle($event)"
+  ></button>
+  <p-menu #menu [popup]="true" [model]="items"></p-menu>
+</ng-template>
