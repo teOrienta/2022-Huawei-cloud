@@ -29,8 +29,8 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
     this.form = formbuilder.group({
       analysisName: [null, Validators.required],
       timestamp: [null, Validators.required],
-      activity: ['', Validators.required],
-      case: ['', Validators.required],
+      activity: [null, Validators.required],
+      case: [null, Validators.required],
       startTimestamp: [null],
       orgResource: [null],
     });
@@ -47,20 +47,20 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
 
   generateColumns() {
     const getColumns = (text: string) => {
-      return text.split(/[,|	;]/).map((value) => value.split(/["\r]/).join(''))
-    }
+      return text.split(/[,|	;]/).map((value) => value.split(/["\r]/).join(''));
+    };
 
     const setHeaderColumns = (row: string) => {
       this.columns = [{ label: 'empty', value: '' }];
-      getColumns(row).map(value => {
+      getColumns(row).map((value) => {
         this.columns.push({ label: value, value: value });
-      })
+      });
     };
     const setExampleColumns = (row: string) => {
       this.exampleSource = [''];
-      getColumns(row).map(value => {
+      getColumns(row).map((value) => {
         this.exampleSource.push(value);
-      })
+      });
     };
 
     if (this.fileToUpload?.name.indexOf('.csv') !== -1) {
@@ -69,8 +69,8 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
         let textFile = reader.result as string;
         if (textFile) {
           let columnsFile = textFile.split('\n').slice(0, 2);
-          setHeaderColumns(columnsFile[0])
-          setExampleColumns(columnsFile[1])
+          setHeaderColumns(columnsFile[0]);
+          setExampleColumns(columnsFile[1]);
         }
       };
       reader.readAsText(this.fileToUpload as File);
@@ -95,7 +95,7 @@ export class CsvImportationComponent implements OnInit, OnDestroy {
         .postFile(this.fileToUpload as File, this.fileParams)
         .pipe(first())
         .subscribe({
-          next: (e) => {}// Close loading
+          next: (e) => {}, // Close loading
         });
     }
   }
