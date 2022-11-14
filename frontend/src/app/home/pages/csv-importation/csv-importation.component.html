@@ -1,35 +1,91 @@
 <main>
   <app-navbar></app-navbar>
-    <div class="content">
-      <p-card [formGroup]="form" header="Filters">
-        <div class="filter-div">
-          <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
-            placeholder="Start date" formControlName="startDate"></p-calendar>
-          
-          <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
-            placeholder="Final date" formControlName="endDate"></p-calendar>
-          
-          <div class="field">
-            <label for="csv-case" class="block">Case</label>
-            <input id="csv-case" type="username" aria-describedby="username1-help" pInputText formControlName="case" />
-            <small id="username1-help" class="block">Enter your username to reset your password.</small>
-          </div>
-          
-          <div class="field">
-            <label for="csv-activity" class="block">Activity</label>
-            <input id="csv-activity" type="username" aria-describedby="username1-help" pInputText formControlName="activity" />
-            <small id="username1-help" class="block">Enter your username to reset your password.</small>
-          </div>
-          
-          <div class="field">
-            <label for="csv-org:resource" class="block">org:resource</label>
-            <input id="csv-org:resource" type="username" aria-describedby="username1-help" pInputText
-              formControlName="orgResource" />
-            <small id="username1-help" class="block">Enter your username to reset your password.</small>
-          </div>
-        </div>
-        
-      </p-card>
-    </div>
+  <div class="content">
+    <p>
+      Load your file with these formats:
+      <b>CSV</b> or <b>XES</b>.
+    </p>
+
+    <app-upload-file></app-upload-file>
+
+    <p-card
+      *ngIf="this.fileToUpload === null"
+      [formGroup]="form"
+      header="Setup columns"
+    >
+      <span class="p-float-label" [style]="{ marginBottom: '1rem' }">
+        <input
+          pInputText
+          type="text"
+          id="inputName"
+          formControlName="analysisName"
+        />
+        <label for="inputName">Analysis' name</label>
+      </span>
+
+      <table>
+        <tr>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              placeholder="Case key name"
+              formControlName="case"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              placeholder="Activity key name"
+              formControlName="activity"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              placeholder="Org:resource"
+              formControlName="orgResource"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              placeholder="Timestamp"
+              formControlName="timestamp"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              optionLabel="name"
+              placeholder="Start timestamp"
+              formControlName="startTimestamp"
+            ></p-dropdown>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" pInputText readonly />
+          </td>
+          <td>
+            <input type="text" pInputText readonly />
+          </td>
+          <td><input type="text" pInputText readonly /></td>
+          <td><input type="text" pInputText readonly /></td>
+          <td><input type="text" pInputText readonly /></td>
+        </tr>
+      </table>
+    </p-card>
+    <button
+      pButton
+      type="button"
+      label="Upload your file"
+      [disabled]="!form.valid"
+      (click)="uploadFile()"
+    ></button>
+  </div>
   <app-footer></app-footer>
 </main>
