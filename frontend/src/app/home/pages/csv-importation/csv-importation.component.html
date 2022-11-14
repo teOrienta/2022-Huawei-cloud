@@ -9,7 +9,7 @@
     <app-upload-file></app-upload-file>
 
     <p-card
-      *ngIf="this.fileToUpload === null"
+      *ngIf="this.fileToUpload !== null"
       [formGroup]="form"
       header="Setup columns"
     >

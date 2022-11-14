@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 router = APIRouter(
-    prefix="/filter",
+    prefix="/api/filter",
     tags=['filter'],
     responses={404: {"Filter": "Not found"}}
 )

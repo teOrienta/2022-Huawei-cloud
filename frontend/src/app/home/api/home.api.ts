@@ -12,7 +12,7 @@ export class HomeApi {
       freq_svg: string;
       perf_svg: string;
       statistics: Statistics
-    }>('/api/filter', params);
+    }>('/api/filter/', params);
   }
 
   public getLiveFlowGraph() {

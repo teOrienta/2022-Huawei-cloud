@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, typing
 
 router = APIRouter(
-    prefix="/upload",
+    prefix="/api/upload",
     tags=['upload'],
     responses={404: {"Upload": "Not found"}}
 )
@@ -34,7 +34,7 @@ class UploadOutputDTO(BaseModel):
     perf_svg: typing.Any
     statistics: StatisticsDTO
 
-@router.post("/upload", response_model=UploadOutputDTO)
+@router.post("/", response_model=UploadOutputDTO)
 async def upload_csv(file: UploadFile,
                      request: UploadInputDTO = Depends(UploadInputDTO.as_form)):
     event_log = csv_file_to_eventlog(file.file, {

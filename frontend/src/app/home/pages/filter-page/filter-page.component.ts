@@ -89,8 +89,8 @@ export class FilterPageComponent implements OnInit, OnDestroy {
         : null,
     };
     const graphParams: FlowGraphParams = {
-      start_date: formatedDates.start,
-      end_date: formatedDates.end,
+      startDate: formatedDates.start,
+      endDate: formatedDates.end,
       detailLevel: this.form.controls['detailLevel'].value,
     };
     this.homeFacade.filterFlowGraph(graphParams);
