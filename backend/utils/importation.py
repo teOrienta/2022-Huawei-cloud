@@ -24,10 +24,6 @@ def csv_file_to_eventlog(file: File, columns: dict):
                                                      errors = 'coerce')
         df = df[df[start_timestamp_key].notna()]
 
-    df = pm4py.format_dataframe(df, case_id=columns["case_id_key"],
-                                activity_key=columns["activity_key"], 
-                                timestamp_key=columns["timestamp_key"],
-                                start_timestamp_key=columns["start_timestamp_key"])
     default_start_timestamp_key = DEFAULT_START_TIMESTAMP_KEY
     rename_columns = {
         columns["case_id_key"]: constants.CASE_CONCEPT_NAME,
@@ -41,9 +37,11 @@ def csv_file_to_eventlog(file: File, columns: dict):
     if columns["start_timestamp_key"] is None:
         del rename_columns[columns["start_timestamp_key"]]
         default_start_timestamp_key = DEFAULT_TIMESTAMP_KEY
-    df = df.rename(columns=rename_columns)
 
+    df = df.rename(columns=rename_columns)
+    df = pm4py.format_dataframe(df)
     event_log = pm4py.convert_to_event_log(df)
+
     event_log.attributes[Parameters.CASE_ID_KEY] = constants.CASE_CONCEPT_NAME
     event_log.attributes[Parameters.ACTIVITY_KEY] = DEFAULT_NAME_KEY
     event_log.attributes[Parameters.RESOURCE_KEY] = DEFAULT_RESOURCE_KEY

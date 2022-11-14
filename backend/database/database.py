@@ -1,5 +1,5 @@
-from database.controllers import EventlogRepository
 from database.config import db_conn, verify_connection
+from database.controllers import EventlogRepository
 from datetime import datetime
 
 class PostgreSQL:
@@ -27,8 +27,9 @@ class PostgreSQL:
             return func(session, *args, **kwargs)
 
     # Eventlog functions
-    def get_event_logs(self, case_id: str = None, activity: str = None, resource: str = None,
-                    start_date: datetime = None, end_date: datetime = None, analysis: str = None):
+    def select_log_events(self, case_id: str = None, activity: str = None,
+                        resource: str = None, start_date: datetime = None,
+                        end_date: datetime = None, analysis: str = None):
         
         if start_date is None:
             start_date = datetime(1970, 1, 1)
@@ -36,11 +37,19 @@ class PostgreSQL:
             end_date = datetime.today()
 
         function = EventlogRepository.select
-        logs = self.call_function_with_session(
+        return self.call_function_with_session(
             function, case_id, activity, resource,
             start_date, end_date, analysis
         )
 
-        return logs
+    def insert_many_log_events(self, events_list: list[dict]):
+        function = EventlogRepository.insert_many
+        return self.call_function_with_session(function, events_list)
 
-    
+    def insert_log_event(self, analysis: str, case_id: str, activity: str, resource: str,
+                         start_timestamp: datetime, end_timestamp: datetime):
+        function = EventlogRepository.insert
+        return self.call_function_with_session(
+            function, case_id, activity, resource,
+            start_timestamp, end_timestamp, analysis
+        )

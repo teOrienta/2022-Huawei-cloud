@@ -1,4 +1,4 @@
-from utils import event_stream, streaming_dfg
+from utils import event_stream, streaming_dfg, streaming_eventlog, database
 from pm4py.objects.log.obj import Event 
 from pm4py import save_vis_dfg
 from routers import routers
@@ -30,6 +30,15 @@ def events_callback(channel, method, prop, body):
     logger.info(f"Received event: {event}")
 
     event = Event(event)
+    database.insert_log_event(
+        analysis = "live",
+        case_id = event[streaming_eventlog.case_id_key],
+        activity = event[streaming_eventlog.activity_key],
+        resource = event.get(streaming_eventlog.resource_key),
+        end_timestamp = event[streaming_eventlog.timestamp_key],
+        start_timestamp = event.get(streaming_eventlog.start_timestamp_key,
+                                    event[streaming_eventlog.timestamp_key])
+    )
     event_stream.append(event)
     channel.basic_ack(delivery_tag = method.delivery_tag)
 
