@@ -28,54 +28,54 @@
           <th>
             <p-dropdown
               [style]="{ width: '100%' }"
-              optionLabel="name"
+              [options]="columns"
               placeholder="Case key name"
               formControlName="case"
+              (onChange)="onChangeColumn($event, 0)"
             ></p-dropdown>
           </th>
           <th>
             <p-dropdown
               [style]="{ width: '100%' }"
-              optionLabel="name"
+              [options]="columns"
               placeholder="Activity key name"
               formControlName="activity"
+              (onChange)="onChangeColumn($event, 1)"
             ></p-dropdown>
           </th>
           <th>
             <p-dropdown
               [style]="{ width: '100%' }"
-              optionLabel="name"
+              [options]="columns"
               placeholder="Org:resource"
               formControlName="orgResource"
+              (onChange)="onChangeColumn($event, 2)"
             ></p-dropdown>
           </th>
           <th>
             <p-dropdown
               [style]="{ width: '100%' }"
-              optionLabel="name"
-              placeholder="Timestamp"
-              formControlName="timestamp"
-            ></p-dropdown>
-          </th>
-          <th>
-            <p-dropdown
-              [style]="{ width: '100%' }"
-              optionLabel="name"
+              [options]="columns"
               placeholder="Start timestamp"
               formControlName="startTimestamp"
+              (onChange)="onChangeColumn($event, 3)"
+            ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="columns"
+              placeholder="Timestamp"
+              formControlName="timestamp"
+              (onChange)="onChangeColumn($event, 4)"
             ></p-dropdown>
           </th>
         </tr>
         <tr>
-          <td>
-            <input type="text" pInputText readonly />
+          <td *ngFor="let column of exampleColumns">
+          <input type="text" value="{{column}}"
+                  pInputText readonly/>
           </td>
-          <td>
-            <input type="text" pInputText readonly />
-          </td>
-          <td><input type="text" pInputText readonly /></td>
-          <td><input type="text" pInputText readonly /></td>
-          <td><input type="text" pInputText readonly /></td>
         </tr>
       </table>
     </p-card>

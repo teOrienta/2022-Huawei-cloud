@@ -22,23 +22,22 @@ export class UploadFileService {
 
   createFormData(params: UploadParams) {
     const formData: FormData = new FormData();
-    formData.append('name', params.name);
-    formData.append('startTimestamp', params.startTimestamp);
-    formData.append('timestamp', params.timestamp);
-
-    formData.append('case', params.case);
-    formData.append('activity', params.activity);
-    formData.append('orgResource', params.orgResource);
+    formData.append('analysis_name', params.analysisName);
+    formData.append('case_id_key', params.caseID);
+    formData.append('activity_key', params.activity);
+    formData.append('resource_key', params.orgResource);
+    formData.append('timestamp_key', params.timestamp);
+    formData.append('start_timestamp_key', params.startTimestamp);
 
     return formData;
   }
 
   postFile(fileToUpload: File, params: UploadParams): Observable<boolean> {
     const formData: FormData = this.createFormData(params);
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    formData.append('file', fileToUpload, fileToUpload.name);
 
     return this.http
-      .post('/api/eventlog/upload/', formData, {
+      .post('/api/upload/', formData, {
         headers: new HttpHeaders({
           timeout: `${5 * 60 * 1000}`,
         }),

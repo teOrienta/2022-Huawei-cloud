@@ -6,20 +6,13 @@ from fastapi import File
 
 def csv_file_to_eventlog(file: File, columns: dict):
     start_timestamp_key = columns.get('start_timestamp_key')
-    columns_to_datetime = [x for x in [
-        columns.get('timestamp_key'),
-        start_timestamp_key
-    ] if x is not None]
-
     dialect = csv.Sniffer().sniff(file.read(1024).decode('utf-8'))
     file.seek(0)
 
     df = pandas.read_csv(file, encoding = "utf-8", sep=dialect.delimiter,
-                         parse_dates=columns_to_datetime)
+                         parse_dates=[columns.get('timestamp_key')])
 
-    if (start_timestamp_key and 
-        start_timestamp_key in df and
-        df[start_timestamp_key].dtype == 'object'):
+    if start_timestamp_key and start_timestamp_key in df:
         df[start_timestamp_key] = pandas.to_datetime(df[start_timestamp_key],
                                                      errors = 'coerce')
         df = df[df[start_timestamp_key].notna()]

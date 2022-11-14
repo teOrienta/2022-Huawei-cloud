@@ -1,8 +1,8 @@
 export interface UploadParams {
-  name: string;
+  analysisName: string;
   startTimestamp: string;
   timestamp: string;
-  case: string;
+  caseID: string;
   activity: string;
   orgResource: string;
 }
