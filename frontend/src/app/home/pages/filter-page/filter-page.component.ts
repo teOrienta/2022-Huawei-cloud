@@ -14,7 +14,6 @@ import { SafeHtml } from '@angular/platform-browser';
 export class FilterPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   detailLevel: number = 0;
-  timeOutState: NodeJS.Timeout = {} as NodeJS.Timeout;
   mode: string = 'frequency';
 
   subscriptionP!: Subscription;
@@ -24,19 +23,18 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   performanceGraph!: SafeHtml | null;
   graphSource!: SafeHtml | null;
 
+  initialDate: Date = new Date();
+  maxDate: Date = new Date();
+
   constructor(
     private formbuilder: FormBuilder,
     private homeFacade: HomeFacade
   ) {
     this.form = formbuilder.group({
       startDate: [null],
-      endDate: [null],
+      endDate: [this.maxDate],
       detailLevel: [0],
       mode: ['frequency'],
-    });
-
-    this.form.valueChanges.subscribe((e) => {
-      this.updateBounce();
     });
 
     this.setGraph();
@@ -44,15 +42,6 @@ export class FilterPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.changeMode('frequency');
-  }
-
-  updateBounce() {
-    if (this.timeOutState) {
-      clearTimeout(this.timeOutState);
-    }
-    this.timeOutState = setTimeout(() => {
-      this.updateFlow();
-    }, 1000);
   }
 
   setGraph() {
@@ -80,13 +69,14 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   updateFlow() {
+    console.log('Entrou');
     const formattedDates = {
-      start: this.form.controls['startDate'].value
-        ? formatDate(this.form.controls['startDate'].value, 'y-MM-dd', 'pt-BR')
-        : null,
-      end: this.form.controls['endDate'].value
-        ? formatDate(this.form.controls['endDate'].value, 'y-MM-dd', 'pt-BR')
-        : null,
+      start: formatDate(
+        this.form.controls['startDate'].value,
+        'y-MM-dd',
+        'pt-BR'
+      ),
+      end: formatDate(this.form.controls['endDate'].value, 'y-MM-dd', 'pt-BR'),
     };
     const graphParams: FlowGraphParams = {
       startDate: formattedDates.start,
