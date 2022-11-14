@@ -6,3 +6,4 @@ uvicorn[standard]
 psycopg2
 psycopg2-binary
 SQLAlchemy
+python-multipart

@@ -45,14 +45,14 @@ async def filter(request: FilterInput):
         return status.HTTP_404_NOT_FOUND
 
     eventlog_cache.save_filtered_log(filtered_log)
-    stats = get_log_statistics(filtered_log)
+    statistics = get_log_statistics(filtered_log)
 
     dfg_detail_percentage = (1 + dfg_detail_level) * 20 / 100
     freq_svg_str, perf_svg_str = generate_svg(filtered_log, dfg_detail_percentage)
 
     return {
         "filters": request.dict(),
-        "statistics": stats,
+        "statistics": statistics,
         "freq_svg": FileResponse(freq_svg_str),
         "perf_svg": FileResponse(perf_svg_str)
     }

@@ -30,7 +30,7 @@ def save_dfg(eventlog: EventLog, activities_count: dict, dfg_detail_percentage: 
 
     return file_path.name
 
-def generate_svg(eventlog: EventLog, dfg_detail_percentage: float = 0.6):
+def generate_svg(eventlog: EventLog, detail_percentage: float = 0.6):
     """
     Receives an eventlog and detail percentage (for log simplification).
     Returns strings that represent the generated svgs for frequency and performance visualizations.
@@ -38,7 +38,7 @@ def generate_svg(eventlog: EventLog, dfg_detail_percentage: float = 0.6):
     
     activity_key = eventlog.attributes[Parameters.ACTIVITY_KEY]
     activities_count = attr_get.get_attribute_values(eventlog, activity_key)
-    freq_svg_str = save_dfg(eventlog, activities_count, dfg_detail_percentage, "frequency")
-    perf_svg_str = save_dfg(eventlog, activities_count, dfg_detail_percentage, "performance")
+    freq_svg_str = save_dfg(eventlog, activities_count, detail_percentage, "frequency")
+    perf_svg_str = save_dfg(eventlog, activities_count, detail_percentage, "performance")
 
     return freq_svg_str, perf_svg_str
