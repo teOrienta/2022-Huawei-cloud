@@ -71,7 +71,6 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   changeMode(mode: string) {
-    console.log(mode);
     if (mode === 'frequency') {
       this.graphSource = this.frequencyGraph;
     } else {
@@ -80,17 +79,17 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   updateFlow() {
-    const formatedDates = {
+    const formattedDates = {
       start: this.form.controls['startDate'].value
-        ? formatDate(this.form.controls['startDate'].value, 'd/MM/yy', 'pt-BR')
+        ? formatDate(this.form.controls['startDate'].value, 'y-MM-dd', 'pt-BR')
         : null,
       end: this.form.controls['endDate'].value
-        ? formatDate(this.form.controls['endDate'].value, 'd/MM/yy', 'pt-BR')
+        ? formatDate(this.form.controls['endDate'].value, 'y-MM-dd', 'pt-BR')
         : null,
     };
     const graphParams: FlowGraphParams = {
-      startDate: formatedDates.start,
-      endDate: formatedDates.end,
+      startDate: formattedDates.start,
+      endDate: formattedDates.end,
       detailLevel: this.form.controls['detailLevel'].value,
     };
     this.homeFacade.filterFlowGraph(graphParams);

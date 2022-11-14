@@ -1,7 +1,7 @@
 from utils import (filter_log, get_log_statistics, generate_svg,
                    streaming_eventlog, eventlog_cache)
 from fastapi.responses import FileResponse
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, UploadFile
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -42,7 +42,9 @@ async def filter(request: FilterInput):
     )
 
     if len(filtered_log) == 0:
-        return status.HTTP_404_NOT_FOUND
+        return status.HTTP_404_NOT_FOUND, {
+            "message": "No events found in the given date range."
+        }
 
     eventlog_cache.save_filtered_log(filtered_log)
     statistics = get_log_statistics(filtered_log)
