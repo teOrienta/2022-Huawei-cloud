@@ -1,8 +1,7 @@
 from utils import (filter_log, get_log_statistics, generate_svg,
                    streaming_eventlog, eventlog_cache)
-from fastapi.responses import FileResponse
-from fastapi import APIRouter, status, UploadFile
-from pydantic import BaseModel
+from pydantic import BaseModel, typing
+from fastapi import APIRouter, status
 from datetime import datetime
 
 router = APIRouter(
@@ -12,28 +11,39 @@ router = APIRouter(
 )
 
 class FilterInput(BaseModel):
-    startDate: str
+    startDate: typing.Optional[str]
     endDate: str
     detailLevel: int
 
-@router.post("/")
+class StatisticsDTO(BaseModel):
+    cases: int
+    activities: int
+    averageCaseDuration: float
+    averageActivityDuration: float
+
+class FilterOutputDTO(BaseModel):
+    filters: FilterInput
+    freq_svg: typing.Any
+    perf_svg: typing.Any
+    statistics: StatisticsDTO
+
+
+@router.post("/", response_model=FilterOutputDTO)
 async def filter(request: FilterInput):
-    start_date = request.startDate
     end_date = request.endDate
+    start_date = str(request.startDate)
     dfg_detail_level = request.detailLevel
 
     original_log = streaming_eventlog.get()
     eventlog_cache.save_log(original_log)
 
-    if not start_date:        
-        start_date = datetime(1970, 1, 1)
-    else:
+    try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    except: start_date = datetime(1970, 1, 1)
     
-    if not end_date:
-        end_date = datetime.today()
-    else:
+    try:
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    except: end_date = datetime.today()
 
     filtered_log = filter_log(
         original_log,
@@ -49,12 +59,12 @@ async def filter(request: FilterInput):
     eventlog_cache.save_filtered_log(filtered_log)
     statistics = get_log_statistics(filtered_log)
 
-    dfg_detail_percentage = (1 + dfg_detail_level) * 20 / 100
+    dfg_detail_percentage = dfg_detail_level * 20 / 100
     freq_svg_str, perf_svg_str = generate_svg(filtered_log, dfg_detail_percentage)
 
     return {
         "filters": request.dict(),
         "statistics": statistics,
-        "freq_svg": FileResponse(freq_svg_str),
-        "perf_svg": FileResponse(perf_svg_str)
+        "freq_svg": freq_svg_str,
+        "perf_svg": perf_svg_str
     }

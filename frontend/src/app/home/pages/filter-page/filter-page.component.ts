@@ -53,11 +53,10 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     this.subscriptionF = this.homeFacade.getFrequencyGraph().subscribe({
       next: (flow) => {
         this.frequencyGraph = flow;
+        this.graphSource = flow;
       },
     });
-    if (this.performanceGraph == null) {
-      this.homeFacade.filterFlowGraph(this.form.value);
-    }
+    this.homeFacade.filterFlowGraph(this.form.value);
   }
 
   changeMode(mode: string) {
@@ -69,7 +68,6 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   updateFlow() {
-    console.log('Entrou');
     const formattedDates = {
       start: formatDate(
         this.form.controls['startDate'].value,
