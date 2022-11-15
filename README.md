@@ -1,7 +1,7 @@
 # 2022 Huawei Cloud Competition - Despro - Desire Process
 
 <p align="center">
-  <img src="https://github.com/teOrienta/2022-Huawei-cloud/blob/main/frontend/src/assets/despro_logo1.png" />
+  <img src="https://github.com/teOrienta/2022-Huawei-cloud/blob/main/frontend/src/assets/logo-cinza.png" />
 </p>
 
 <p align = "center">
@@ -18,11 +18,11 @@
 </p>
 
 
-We developed DesPro, a tool aiming to load process information automatically and display new developments through a graph system. The information is stored in the database for future analysis. After loading the data, the discovered processes are displayed in an interactive and intuitive manner, allowing specialists and officials to easily analyze the graph in search of possible bottlenecks and deviations from the desired processes. To further enhance user analysis, DesPro counts with filtering options, allowing users to restrict the pool of data being analyzed by factors such as date intervals or other criteria.
+DesPro is a tool aiming to load process information automatically and display new developments through a graph system. The information is stored in the database for future analysis. After loading the data, the discovered processes are displayed in an interactive and intuitive manner, allowing specialists and officials to easily analyze the graph in search of possible bottlenecks and deviations from the desired processes. To further enhance user analysis, DesPro counts with filtering options, allowing users to restrict the pool of data being analyzed by factors such as date intervals or other criteria.
 
 ## Data source 📊
 
-These links are the data source of the project.
+These are some of the data source of the project.
 - [Licitações](https://transparencia.gov.br/download-de-dados/licitacoes)
 - [Dicionário](https://www.portaldatransparencia.gov.br/pagina-interna/603389-dicionario-de-dados-licitacoes)
 
@@ -45,7 +45,7 @@ The following tools were chosen based on member experience and market adoption:
 * RabbitMQ: Messaging service used to stream new event data into our tool.
 
 
-##Cloud Services Description
+## Cloud Services Description
 
 These were the services provided by Huawei that were used to deploy the solution:
  
@@ -58,7 +58,7 @@ These were the services provided by Huawei that were used to deploy the solution
 
 ## Get started
 
-1. Before start you need to build the images with the following command:
+1. Before starting you need to build the images with the following command:
 
 ```bash
 docker-compose build
