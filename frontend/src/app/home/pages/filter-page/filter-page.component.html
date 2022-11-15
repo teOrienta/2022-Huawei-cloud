@@ -29,6 +29,7 @@
           <div [formGroup]="form">
             <h4>Analysis</h4>
             <p-dropdown
+              (onSelect)="updateFlow()"
               [style]="{ width: '100%' }"
               [options]="analysis"
               placeholder="Select the analysis"
@@ -74,10 +75,7 @@
         </div>
       </div>
     </p-card>
-    <app-flow 
-      [graphSource]="graphSource"
-      style="flex:1"
-    ></app-flow>
+    <app-flow [graphSource]="graphSource" style="flex: 1"></app-flow>
     <app-footer></app-footer>
   </div>
 </main>

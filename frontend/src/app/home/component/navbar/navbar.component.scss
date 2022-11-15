@@ -34,3 +34,17 @@
     }
   }
 }
+
+[navMenu] {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  [navbar] {
+    display: none;
+  }
+  [navMenu] {
+    display: block;
+    position: absolute;
+  }
+}
