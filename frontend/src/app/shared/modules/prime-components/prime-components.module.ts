@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
   declarations: [],
@@ -41,6 +42,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     DropdownModule,
     DialogModule,
     AutoCompleteModule,
+    AccordionModule,
   ],
 })
 export class PrimeComponentsModule {}

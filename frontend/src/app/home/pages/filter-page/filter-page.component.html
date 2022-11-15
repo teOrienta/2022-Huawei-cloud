@@ -62,18 +62,32 @@
             (onOptionClick)="changeMode(mode)"
           ></p-selectButton>
         </div>
-
-        <div class="filter-statistics">
-          <span>Cases: {{ statistics.cases }}</span>
-          <span>Case duration: {{ statistics.averageCaseDuration }} </span>
-
-          <span>Activities: {{ statistics.activities }}</span>
-          <span
-            >Activity duration: {{ statistics.averageActivityDuration }}</span
-          >
-        </div>
       </div>
     </p-card>
+    <div>
+      <p-accordion>
+        <p-accordionTab header="Overview">
+          <div class="filter-statistics">
+            <div class="overview-item">
+              <i class="material-icons">cases</i>
+              Cases: {{ statistics.cases }}
+            </div>
+            <div class="overview-item"> 
+              <i class="material-icons">hourglass_full</i>
+               Case duration: {{ statistics.averageCaseDuration }} 
+            </div>
+            <div class="overview-item">
+              <i class="material-icons">work</i>
+              Activities: {{ statistics.activities }}
+            </div>
+            <div class="overview-item">
+              <i class="material-icons">hourglass_full</i>
+              Activity duration: {{ statistics.averageActivityDuration }}
+            </div>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
     <app-flow 
       [graphSource]="graphSource"
       style="flex:1"

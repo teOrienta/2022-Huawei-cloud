@@ -36,6 +36,14 @@ main {
       grid-template-columns: 1fr 1fr;
     }
   }
+
+  .material-icons {
+    vertical-align: middle;
+  }
+
+  .overview-item {
+    margin-bottom: 8px;
+  }
 }
 
 app-navbar {
