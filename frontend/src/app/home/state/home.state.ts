@@ -14,16 +14,25 @@ export class HomeState {
   private readonly statistics = new BehaviorSubject<Statistics>({
     cases: 0,
     activities: 0,
-    averageCaseDuration: 0,
-    averageActivityDuration: 0,
+    averageCaseDuration: "",
+    averageActivityDuration: "",
   });
   private readonly graphGenerationParams = new BehaviorSubject<FlowGraphParams>(
     {} as FlowGraphParams
   );
+  private readonly analysis = new BehaviorSubject<string[]>([]);
   private readonly errorMessage = new BehaviorSubject<string>('');
   private readonly loading = new BehaviorSubject<boolean>(false);
 
   constructor(private readonly sanitizer: DomSanitizer) {}
+
+  getAnalysis() {
+    return this.analysis.asObservable();
+  }
+
+  setAnalysis(analysis: string[]) {
+    this.analysis.next(analysis);
+  }
 
   getGraphSource() {
     return this.graphSource.asObservable();

@@ -37,6 +37,18 @@ export class HomeFacade {
     return this.state.setGraphGenerationParams(params);
   }
 
+  getAnalysis() {
+    return this.state.getAnalysis();
+  }
+
+  fetchAnalysis() {
+    this.flowGraphApi.getAnalysis().subscribe({
+      next: (data) => {
+        this.state.setAnalysis(data.analysis);
+      }
+    });
+  }
+
   fetchFlowGraph(
     fetchParams = {
       successfulCallback: () => {},

@@ -32,6 +32,7 @@ export class FlowComponent implements OnInit, AfterContentChecked {
   }
 
   renderSvgPanZoom() {
+    if (!this.graph) return
     const svgElement = this.graph.nativeElement.querySelector('svg');
     if (svgElement === null) return;
     svgPanZoom(svgElement as SVGElement, {

@@ -6,8 +6,8 @@ from pm4py.streaming.algo.interface import StreamingAlgorithm
 from pm4py.objects.log.obj import EventLog, Trace
 from dateutil.parser import parser as date_parser
 from pm4py.util import exec_utils, constants
+import logging, datetime
 from enum import Enum
-import logging
 
 
 class Parameters(Enum):
@@ -54,6 +54,10 @@ class StreamingEventlog(StreamingAlgorithm):
             Parameters.TIMESTAMP_KEY: self.timestamp_key,
             Parameters.START_TIMESTAMP_KEY: self.start_timestamp_key
         })
+        self.event_amount = 0
+        self.case_amount = 0
+        self.first_date = datetime.datetime.now()
+        self.last_date = datetime.datetime.now()
         StreamingAlgorithm.__init__(self)
 
     def __transform_event_date(self, event):
@@ -77,6 +81,11 @@ class StreamingEventlog(StreamingAlgorithm):
         if start_timestamp:
             new_start_timestamp = parser.parse(start_timestamp)
             event[self.start_timestamp_key] = new_start_timestamp
+        
+        if self.first_date > event[self.timestamp_key]:
+            self.first_date = event[self.timestamp_key]
+        if self.last_date < event[self.timestamp_key]:
+            self.last_date = event[self.timestamp_key]
 
         return event
 
@@ -96,12 +105,14 @@ class StreamingEventlog(StreamingAlgorithm):
             return logging.warning(f"{event} does not contain all required keys")
 
         event = self.__transform_event_date(event)
+        self.event_amount += 1
         for trace in self.eventlog:
             if trace.attributes[self.case_id_key] == event[self.case_id_key]:
                 return trace.append(event)
         self.eventlog.append(Trace([event], attributes = {
             self.case_id_key: event[self.case_id_key]
         }))
+        self.case_amount += 1
 
     def _current_result(self):
         """

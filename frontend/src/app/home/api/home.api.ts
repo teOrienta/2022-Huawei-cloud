@@ -20,4 +20,10 @@ export class HomeApi {
       responseType: 'text',
     });
   }
+
+  public getAnalysis() {
+    return this.http.get<{
+      analysis: string[]
+    }>('/api/upload/analysis');
+  }
 }

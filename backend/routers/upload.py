@@ -1,9 +1,7 @@
-from utils import (eventlog_cache, database, as_form, generate_svg,
-                   csv_file_to_eventlog, get_log_statistics, constants,
+from utils import (database, constants, as_form, csv_to_formatted_dict,
                    DEFAULT_START_TIMESTAMP_KEY, DEFAULT_NAME_KEY,
                    DEFAULT_RESOURCE_KEY, DEFAULT_TIMESTAMP_KEY)
 from fastapi import APIRouter, Depends, UploadFile
-from fastapi.responses import FileResponse
 from pydantic import BaseModel, typing
 
 router = APIRouter(
@@ -30,38 +28,36 @@ class StatisticsDTO(BaseModel):
 
 class UploadOutputDTO(BaseModel):
     analysis_name: str
-    freq_svg: typing.Any
-    perf_svg: typing.Any
-    statistics: StatisticsDTO
+
+class AnalysisOutputDTO(BaseModel):
+    analysis: typing.List[str]
 
 @router.post("/", response_model=UploadOutputDTO)
 async def upload_csv(file: UploadFile,
                      request: UploadInputDTO = Depends(UploadInputDTO.as_form)):
-    event_log = csv_file_to_eventlog(file.file, {
+    events_dict = csv_to_formatted_dict(file.file, {
         "case_id_key": request.case_id_key,
         "resource_key": request.resource_key,
         "activity_key": request.activity_key,
         "timestamp_key": request.timestamp_key,
         "start_timestamp_key": request.start_timestamp_key
     })
-    freq_svg_str, perf_svg_str = generate_svg(event_log)
-    statistics = get_log_statistics(event_log)
-    eventlog_cache.save_log(event_log)
     database.insert_many_log_events([
         {
             "analysis": request.analysis_name,
-            "caseId": trace.attributes[DEFAULT_NAME_KEY],
+            "caseId": event[constants.CASE_CONCEPT_NAME],
             "activity": event[DEFAULT_NAME_KEY],
             "resource": event.get(DEFAULT_RESOURCE_KEY),
             "endTimestamp": event[DEFAULT_TIMESTAMP_KEY],
             "startTimestamp": event.get(DEFAULT_START_TIMESTAMP_KEY,
                                         event[DEFAULT_TIMESTAMP_KEY])
-        } for trace in event_log for event in trace
+        } for event in events_dict
     ])
 
+    return { "analysis_name": request.analysis_name }
+
+@router.get("/analysis", response_model=AnalysisOutputDTO)
+async def get_analysis():
     return {
-        "analysis_name": request.analysis_name,
-        "freq_svg": FileResponse(freq_svg_str),
-        "perf_svg": FileResponse(perf_svg_str),
-        "statistics": statistics
+        "analysis": database.select_analysis()
     }

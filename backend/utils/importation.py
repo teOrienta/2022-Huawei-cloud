@@ -4,18 +4,8 @@ from .streaming import (Parameters, DEFAULT_NAME_KEY, DEFAULT_RESOURCE_KEY,
 import pandas, pm4py, csv
 from fastapi import File
 
-def csv_file_to_eventlog(file: File, columns: dict):
-    start_timestamp_key = columns.get('start_timestamp_key')
-    dialect = csv.Sniffer().sniff(file.read(1024).decode('utf-8'))
-    file.seek(0)
-
-    df = pandas.read_csv(file, encoding = "utf-8", sep=dialect.delimiter,
-                         parse_dates=[columns.get('timestamp_key')])
-
-    if start_timestamp_key and start_timestamp_key in df:
-        df[start_timestamp_key] = pandas.to_datetime(df[start_timestamp_key],
-                                                     errors = 'coerce')
-        df = df[df[start_timestamp_key].notna()]
+def list_to_eventlog(event_list: list, columns: dict):
+    df = pandas.DataFrame(event_list, columns=list(columns.values()))
 
     default_start_timestamp_key = DEFAULT_START_TIMESTAMP_KEY
     rename_columns = {
@@ -42,3 +32,32 @@ def csv_file_to_eventlog(file: File, columns: dict):
     event_log.attributes[Parameters.START_TIMESTAMP_KEY] = default_start_timestamp_key
 
     return event_log
+
+def csv_to_formatted_dict(file: File, columns: dict):
+    start_timestamp_key = columns.get('start_timestamp_key')
+    dialect = csv.Sniffer().sniff(file.read(1024).decode('utf-8'))
+    file.seek(0)
+
+    df = pandas.read_csv(file, encoding = "utf-8", sep=dialect.delimiter,
+                         parse_dates=[columns.get('timestamp_key')])
+
+    if start_timestamp_key and start_timestamp_key in df:
+        df[start_timestamp_key] = pandas.to_datetime(df[start_timestamp_key],
+                                                     errors = 'coerce')
+        df = df[df[start_timestamp_key].notna()]
+
+    default_start_timestamp_key = DEFAULT_START_TIMESTAMP_KEY
+    rename_columns = {
+        columns["case_id_key"]: constants.CASE_CONCEPT_NAME,
+        columns["resource_key"]: DEFAULT_RESOURCE_KEY,
+        columns["activity_key"]: DEFAULT_NAME_KEY,
+        columns["timestamp_key"]: DEFAULT_TIMESTAMP_KEY,
+        columns["start_timestamp_key"]: default_start_timestamp_key,
+    }
+    if columns["resource_key"] is None:
+        del rename_columns[columns["resource_key"]]
+    if columns["start_timestamp_key"] is None:
+        del rename_columns[columns["start_timestamp_key"]]
+        default_start_timestamp_key = DEFAULT_TIMESTAMP_KEY
+
+    return df.rename(columns=rename_columns).to_dict('records')

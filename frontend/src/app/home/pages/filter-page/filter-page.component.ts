@@ -29,6 +29,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
 
   initialDate: Date = new Date();
   maxDate: Date = new Date();
+  analysis: string[] = [];
 
   constructor(
     private formbuilder: FormBuilder,
@@ -39,8 +40,11 @@ export class FilterPageComponent implements OnInit, OnDestroy {
       endDate: [this.maxDate],
       detailLevel: [0],
       mode: ['frequency'],
+      analysis: "live"
     });
-
+    homeFacade.getAnalysis().subscribe((value) => {
+      this.analysis = value;
+    })
     this.setGraph();
   }
 
@@ -66,6 +70,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
       },
     });
     this.homeFacade.filterFlowGraph(this.form.value);
+    this.homeFacade.fetchAnalysis();
   }
 
   changeMode(mode: string) {
@@ -88,6 +93,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     const graphParams: FlowGraphParams = {
       startDate: formattedDates.start,
       endDate: formattedDates.end,
+      analysis: this.form.controls['analysis'].value,
       detailLevel: this.form.controls['detailLevel'].value,
     };
 

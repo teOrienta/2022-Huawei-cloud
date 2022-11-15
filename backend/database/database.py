@@ -43,6 +43,10 @@ class PostgreSQL:
         )
 
         return list(map(lambda x: x._asdict(), logs))
+    
+    def select_analysis(self):
+        function = EventlogRepository.select_analysis
+        return self.call_function_with_session(function)
 
     def insert_many_log_events(self, events_list: list[dict]):
         function = EventlogRepository.insert_many

@@ -84,6 +84,12 @@ class EventlogRepository():
         )
         
         return list(map(EventlogModel._make, logs))
+    
+    @staticmethod
+    def select_analysis(session: Session) -> list[str]:
+        """ Selects the eventlog analysis names. """
+        analysis = session.query(Eventlog.analysis).distinct().all()
+        return [x[0] for x in list(analysis)]
 
     @staticmethod
     def select_all(session: Session) -> list[EventlogModel]:

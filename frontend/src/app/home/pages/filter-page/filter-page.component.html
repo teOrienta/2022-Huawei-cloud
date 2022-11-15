@@ -26,6 +26,16 @@
             (onSelect)="updateFlow()"
           ></p-calendar>
 
+          <div [formGroup]="form">
+            <h4>Analysis</h4>
+            <p-dropdown
+              [style]="{ width: '100%' }"
+              [options]="analysis"
+              placeholder="Select the analysis"
+              formControlName="analysis"
+            ></p-dropdown>
+          </div>
+
           <div>
             <h4>Detail level: {{ detailLevel }}</h4>
             <p-slider
