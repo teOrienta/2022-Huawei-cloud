@@ -19,8 +19,8 @@ class FilterInput(BaseModel):
 class StatisticsDTO(BaseModel):
     cases: int
     activities: int
-    averageCaseDuration: float
-    averageActivityDuration: float
+    averageCaseDuration: str
+    averageActivityDuration: str
 
 class FilterOutputDTO(BaseModel):
     filters: FilterInput

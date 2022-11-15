@@ -7,6 +7,31 @@ def average(l: list):
         avg = round(sum(l) / len(l), 2)
     return avg
 
+def format_timedelta(seconds: float) -> str:
+    intervals = (
+        ('years', 31536000),
+        ('months', 2592000),
+        ('weeks', 604800),  
+        ('days', 86400),    
+        ('hours', 3600),    
+        ('minutes', 60),
+        ('seconds', 1),
+    )
+    result = []
+    if seconds is None:
+        return "instant"
+
+    for name, count in intervals:
+        value = seconds // count
+        if value:
+            seconds -= value * count
+            if value == 1:
+                name = name.rstrip('s')
+            result.append("{} {}".format(int(value), name))
+
+    if len(result) == 0: result = ["instant"]
+    return ', '.join(result[:2])
+
 def get_log_statistics(eventlog: EventLog):
     """
     Receives and EventLog.
@@ -14,8 +39,8 @@ def get_log_statistics(eventlog: EventLog):
     {
         "cases": int (number of cases contained within the EventLog),
         "activities": int (number of activities contained within the Eventlog),
-        "averageCaseDuration": int (average duration of each case, in seconds),
-        "averageActivityDuration": int (average duration of each activity, in seconds)
+        "averageCaseDuration": str (average duration of each case, in seconds),
+        "averageActivityDuration": str (average duration of each activity, in seconds)
     }
     """
     timestamp_key = eventlog.attributes[Parameters.TIMESTAMP_KEY]
@@ -45,6 +70,6 @@ def get_log_statistics(eventlog: EventLog):
     return {
         "cases": cases_amount,
         "activities": activities_amount,
-        "averageCaseDuration": avg_case_duration,
-        "averageActivityDuration": avg_activity_duration
+        "averageCaseDuration": format_timedelta(avg_case_duration),
+        "averageActivityDuration": format_timedelta(avg_activity_duration)
     }
