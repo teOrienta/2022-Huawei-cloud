@@ -33,6 +33,7 @@ main {
     }
 
     .filter-statistics {
+      gap: 0.4rem;
       align-self: end;
       display: grid;
       grid-template-columns: 1fr 1fr;
