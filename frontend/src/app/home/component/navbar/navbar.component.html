@@ -1,7 +1,7 @@
-<nav navbar>
+<nav navbar *ngIf="mediaQuery; else navMenu">
   <div logoDiv>
     <a href="/">
-      <img src="../../../../assets/despro_logo2.png" alt="logo-icon" />
+      <img src="../../../../assets/logo-branca.png" alt="logo-icon" />
     </a>
   </div>
   <div class="routes">
@@ -15,7 +15,7 @@
   </div>
 </nav>
 
-<div navMenu>
+<ng-template #navMenu>
   <button
     type="button"
     pButton
@@ -24,4 +24,4 @@
     (click)="menu.toggle($event)"
   ></button>
   <p-menu #menu [popup]="true" [model]="items"></p-menu>
-</div>
+</ng-template>

@@ -3,7 +3,7 @@
   width: 225px;
   display: flex;
   flex-direction: column;
-  background-color: #0058b5;
+  background-color: #1B2943;
   gap: 1rem;
   text-align: center;
 
@@ -14,7 +14,9 @@
     text-align: center;
 
     :hover {
-      background-color: #0079fa;
+      background-color: #7293cf;
+      transition: 0.3s;
+
     }
   }
 
@@ -28,23 +30,9 @@
   [logoDiv] {
     img {
       height: 10rem;
-      width: 10rem;
+      
       margin-top: 1rem;
       padding: 1rem;
     }
-  }
-}
-
-[navMenu] {
-  display: none;
-}
-
-@media screen and (max-width: 800px) {
-  [navbar] {
-    display: none;
-  }
-  [navMenu] {
-    display: block;
-    position: absolute;
   }
 }

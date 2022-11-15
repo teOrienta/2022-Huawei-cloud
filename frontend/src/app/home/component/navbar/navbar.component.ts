@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  borderSelected = 'background-color: #254E7A';
+  borderSelected = 'background-color: #101d2a';
   mediaQuery: boolean = true;
   items: MenuItem[] = [];
   url = '';

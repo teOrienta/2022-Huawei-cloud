@@ -4,89 +4,51 @@
     <p-card header="Filters">
       <div class="filter-div">
         <div [formGroup]="form" class="filter-div">
-          <p-calendar
-            [style]="{ width: '200px' }"
-            [showIcon]="true"
-            dateFormat="dd/mm/yy"
-            [readonlyInput]="true"
-            placeholder="Start date"
-            formControlName="startDate"
-            [maxDate]="maxDate"
-            (onSelect)="updateFlow()"
-          ></p-calendar>
-
-          <p-calendar
-            [style]="{ width: '200px' }"
-            [showIcon]="true"
-            dateFormat="dd/mm/yy"
-            [readonlyInput]="true"
-            placeholder="Final date"
-            formControlName="endDate"
-            [maxDate]="maxDate"
-            (onSelect)="updateFlow()"
-          ></p-calendar>
 
           <div [formGroup]="form">
+            <h4>Start Date</h4>
+            <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
+              placeholder="Start date" formControlName="startDate" [maxDate]="maxDate" (onSelect)="updateFlow()">
+            </p-calendar>
+          </div>
+          <div [formGroup]="form">
+            <h4>End Date</h4>
+            <p-calendar [style]="{ width: '200px' }" [showIcon]="true" dateFormat="dd/mm/yy" [readonlyInput]="true"
+              placeholder="Final date" formControlName="endDate" [maxDate]="maxDate" (onSelect)="updateFlow()">
+            </p-calendar>
+          </div>
+          <div [formGroup]="form">
             <h4>Analysis</h4>
-            <p-dropdown
-              (onSelect)="updateFlow()"
-              [style]="{ width: '100%' }"
-              [options]="analysis"
-              placeholder="Select the analysis"
-              formControlName="analysis"
-            ></p-dropdown>
+            <p-dropdown [style]="{ width: '100%' }" [options]="analysis" placeholder="Select the analysis"
+              formControlName="analysis"></p-dropdown>
           </div>
 
           <div>
             <h4>Detail level: {{ detailLevel }}</h4>
-            <p-slider
-              [style]="{ width: '200px' }"
-              formControlName="detailLevel"
-              [max]="5"
-              [step]="1"
-              [(ngModel)]="detailLevel"
-              (onSlideEnd)="updateFlow()"
-            ></p-slider>
+            <p-slider [style]="{ width: '200px' }" formControlName="detailLevel" [max]="5" [step]="1"
+              [(ngModel)]="detailLevel" (onSlideEnd)="updateFlow()"></p-slider>
           </div>
         </div>
 
         <div>
           <h4>Mode</h4>
-          <p-selectButton
-            [options]="[
+          <p-selectButton [options]="[
               { label: 'Performance', value: 'performance' },
               { label: 'Frequency', value: 'frequency' }
-            ]"
-            optionLabel="label"
-            optionValue="value"
-            [(ngModel)]="mode"
-            (onOptionClick)="changeMode(mode)"
-          ></p-selectButton>
+            ]" optionLabel="label" optionValue="value" [(ngModel)]="mode" (onOptionClick)="changeMode(mode)">
+          </p-selectButton>
         </div>
 
         <div class="filter-statistics">
-          <span>
-            <i class="pi pi-chart-bar"></i>
-            Cases: {{ statistics.cases }}
-          </span>
-          <span>
-            <i class="pi pi-clock"></i>
-            Case duration:
-            {{ statistics.averageCaseDuration }}
-          </span>
+          <span>Cases: <b> {{ statistics.cases }}</b></span>
+          <span>Case duration:  <b>{{ statistics.averageCaseDuration }}</b> </span>
 
-          <span>
-            <i class="pi pi-chart-line"></i>
-            Activities: {{ statistics.activities }}
-          </span>
-          <span>
-            <i class="pi pi-hourglass"></i>
-            Activity duration: {{ statistics.averageActivityDuration }}</span
-          >
+          <span>Activities: <b>{{ statistics.activities }} </b></span>
+          <span>Activity duration: <b> {{ statistics.averageActivityDuration }} </b></span>
         </div>
       </div>
     </p-card>
-    <app-flow [graphSource]="graphSource" style="flex: 1"></app-flow>
+    <app-flow [graphSource]="graphSource" style="flex:1"></app-flow>
     <app-footer></app-footer>
   </div>
 </main>

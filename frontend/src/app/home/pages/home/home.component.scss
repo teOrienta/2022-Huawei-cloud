@@ -38,8 +38,16 @@ main {
 
       [pButton] {
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 0.3rem !important;
+        
+        
       }
     }
+  }
+}
+
+app-navbar {
+  @media screen and (max-width: 800px) {
+    position: absolute;
   }
 }
