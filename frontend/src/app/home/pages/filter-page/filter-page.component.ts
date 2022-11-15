@@ -22,6 +22,7 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   subscriptionP!: Subscription;
   subscriptionF!: Subscription;
   subscriptionS!: Subscription;
+  subscriptionA!: Subscription;
 
   frequencyGraph!: SafeHtml | null;
   performanceGraph!: SafeHtml | null;
@@ -40,11 +41,8 @@ export class FilterPageComponent implements OnInit, OnDestroy {
       endDate: [this.maxDate],
       detailLevel: [0],
       mode: ['frequency'],
-      analysis: "live"
+      analysis: 'live',
     });
-    homeFacade.getAnalysis().subscribe((value) => {
-      this.analysis = value;
-    })
     this.setGraph();
   }
 
@@ -53,6 +51,9 @@ export class FilterPageComponent implements OnInit, OnDestroy {
   }
 
   setGraph() {
+    this.subscriptionA = this.homeFacade.getAnalysis().subscribe((value) => {
+      this.analysis = value;
+    });
     this.subscriptionP = this.homeFacade.getPerformanceGraph().subscribe({
       next: (flow) => {
         this.performanceGraph = flow;
@@ -109,6 +110,9 @@ export class FilterPageComponent implements OnInit, OnDestroy {
     }
     if (this.subscriptionS) {
       this.subscriptionS.unsubscribe();
+    }
+    if (this.subscriptionA) {
+      this.subscriptionA.unsubscribe();
     }
   }
 }

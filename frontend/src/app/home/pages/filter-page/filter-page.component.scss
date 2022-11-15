@@ -1,7 +1,9 @@
 main {
   display: flex;
   @media screen and (max-width: 800px) {
-    margin-top: 1.5rem;
+    .content {
+      margin-top: 1.5rem;
+    }
   }
 
   .content {
@@ -31,15 +33,10 @@ main {
     }
 
     .filter-statistics {
+      gap: 0.4rem;
       align-self: end;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
-  }
-}
-
-app-navbar {
-  @media screen and (max-width: 800px) {
-    position: absolute;
   }
 }

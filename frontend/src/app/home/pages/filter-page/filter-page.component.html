@@ -29,6 +29,7 @@
           <div [formGroup]="form">
             <h4>Analysis</h4>
             <p-dropdown
+              (onSelect)="updateFlow()"
               [style]="{ width: '100%' }"
               [options]="analysis"
               placeholder="Select the analysis"
@@ -64,20 +65,28 @@
         </div>
 
         <div class="filter-statistics">
-          <span>Cases: {{ statistics.cases }}</span>
-          <span>Case duration: {{ statistics.averageCaseDuration }} </span>
+          <span>
+            <i class="pi pi-chart-bar"></i>
+            Cases: {{ statistics.cases }}
+          </span>
+          <span>
+            <i class="pi pi-clock"></i>
+            Case duration:
+            {{ statistics.averageCaseDuration }}
+          </span>
 
-          <span>Activities: {{ statistics.activities }}</span>
-          <span
-            >Activity duration: {{ statistics.averageActivityDuration }}</span
+          <span>
+            <i class="pi pi-chart-line"></i>
+            Activities: {{ statistics.activities }}
+          </span>
+          <span>
+            <i class="pi pi-hourglass"></i>
+            Activity duration: {{ statistics.averageActivityDuration }}</span
           >
         </div>
       </div>
     </p-card>
-    <app-flow 
-      [graphSource]="graphSource"
-      style="flex:1"
-    ></app-flow>
+    <app-flow [graphSource]="graphSource" style="flex: 1"></app-flow>
     <app-footer></app-footer>
   </div>
 </main>
